@@ -1,0 +1,34 @@
+<p-messages></p-messages>
+
+<p-card class="card flex justify-content-center mt-3">
+  <p-table
+    [value]="lstOrdSent"
+    selectionMode="single"
+    [(selection)]="selOrdSent"
+    dataKey="fileName"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5,10,25,50]"
+    responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Archivo</th>
+        <th>Resultado Validacion</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-orderSent>
+      <tr [pSelectableRow]="orderSent">
+        <td>{{orderSent.fileName}}</td>
+        <td>
+          <button
+            pButton
+            type="button"
+            label={{orderSent.resultValidation}}
+            (click)="downloadFile(orderSent.fileName)"
+            class="p-button-link">
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

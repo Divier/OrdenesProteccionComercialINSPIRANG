@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "cargue_archivo": {
+    "ordenesProteccionComercial": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,27 +17,33 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/cargue_archivo",
+            "outputPath": "dist/OPC-web",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "baseHref": "/OPC-web/",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css",
               "src/styles.css"
             ],
             "scripts": []
           },
           "configurations": {
             "production": {
+              "baseHref": "/OPC-web/",
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -68,10 +74,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "cargue_archivo:build:production"
+              "browserTarget": "ordenesProteccionComercial:build:production"
             },
             "development": {
-              "browserTarget": "cargue_archivo:build:development"
+              "browserTarget": "ordenesProteccionComercial:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +85,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "cargue_archivo:build"
+            "browserTarget": "ordenesProteccionComercial:build"
           }
         },
         "test": {
@@ -102,5 +108,5 @@
       }
     }
   },
-  "defaultProject": "cargue_archivo"
+  "defaultProject": "ordenesProteccionComercial"
 }

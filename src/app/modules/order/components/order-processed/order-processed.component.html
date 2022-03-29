@@ -1,0 +1,73 @@
+<p-messages></p-messages>
+
+<p-card class="card flex justify-content-center mt-3">
+  <ng-template pTemplate="header">
+    <strong>Ordenes Procesadas</strong>
+  </ng-template>
+  <p-table
+    [value]="lstOrdProc"
+    selectionMode="single"
+    [(selection)]="selOrdProc"
+    dataKey="fileName"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5,10,25,50]"
+    responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Archivo</th>
+        <th>Resultado Validacion</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-orderProc>
+      <tr [pSelectableRow]="orderProc">
+        <td>{{orderProc.fileName}}</td>
+        <td>
+          <button
+            pButton
+            type="button"
+            label={{orderProc.resultValidation}}
+            (click)="downloadFile()"
+            class="p-button-link">
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+
+<p-card class="card flex justify-content-center mt-5">
+  <ng-template pTemplate="header">
+    <strong>Ordenes Con Error</strong>
+  </ng-template>
+  <p-table
+    [value]="lstOrdErr"
+    selectionMode="single"
+    [(selection)]="selOrdErr"
+    dataKey="fileName"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5,10,25,50]"
+    responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Archivo</th>
+        <th>Resultado Validacion</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-orderErr>
+      <tr [pSelectableRow]="orderErr">
+        <td>{{orderErr.fileName}}</td>
+        <td>
+          <button
+            pButton
+            type="button"
+            label={{orderErr.resultValidation}}
+            (click)="downloadFile()"
+            class="p-button-link">
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

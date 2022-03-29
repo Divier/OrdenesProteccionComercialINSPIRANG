@@ -1,1 +1,458 @@
 /* You can add global styles to this file, and also import other style files */
+html,
+body,
+table {
+    font-family: "Helvetica", "Arial", sans-serif;
+}
+
+.header-title {
+    text-shadow: 1px 1px 1px #00000094;
+    font-weight: bold;
+}
+
+.form-control {
+    height: 25px;
+}
+
+:root {
+  /*Paleta de Colores*/
+  --color-rojo: #da291c;
+  --color-gris: gray;
+  --color-grisClaro: whitesmoke;
+  --color-azul: #0097ab;
+  --color-verde: #00ab2b;
+  --color-negro: #222;
+  --color-blanco: #fff;
+  --color-dorado: rgb(223, 190, 46);
+  --color-plata: rgb(170, 170, 170);
+  --color-violeta: rgb(99, 0, 145);
+  --color-rosa: rgb(253, 180, 155);
+
+  /*Fuentes*/
+  --tamañoFuenteTitulo: x-large !important;
+  --tamañoFuenteParrafo: 12px !important;
+  --tamañoFuenteTablaHeader: 14px !important;
+  --tamañoFuenteTablaBody: 12px !important;
+}
+
+.principal-button {
+    background: var(--color-rojo);
+    border: 1px solid var(--color-rojo);
+}
+.principal-button:focus {
+    box-shadow: 0 0 0 0.2rem #ed948e;
+}
+
+label {
+    font-size: var(--tamañoFuenteTablaHeader);
+}
+.span-info {
+    font-size: var(--tamañoFuenteParrafo);
+}
+
+.p-fieldset .p-fieldset-legend {
+    border: none;
+    background: inherit;
+}
+
+.p-inputtext:enabled:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.2rem #ed948e;
+    border-color: var(--color-rojo);
+}
+.p-inputtext:enabled:hover {
+    border-color: var(--color-rojo);
+}
+.p-inputnumber-buttons-stacked .p-inputnumber-input {
+    font-size: var(--tamañoFuenteTablaBody);
+}
+
+.p-button {
+  color: #ffffff;
+  background: var(--color-rojo);
+  border: 1px solid var(--color-rojo);
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border-radius: 3px;
+}
+
+.p-button-label {
+    font-size:var(--tamañoFuenteTablaHeader);
+    font-weight: bold;
+    height: 22px;
+    line-height: 20px;
+}
+
+.p-button:disabled {
+    cursor: not-allowed;
+    text-decoration: none;
+}
+.p-button-rounded {
+    font-weight: bold;
+    line-height: 20px;
+    height: 22px;
+}
+.p-button.p-button-secondary{
+    color: #ffffff;
+    background: #757575 !important;
+    border: 1px solid #757575;
+}
+.p-button:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem var(--color-rojo);
+}
+.p-button:enabled:active{
+    color: #ffffff;
+    background: var(--color-rojo);
+    border-color: var(--color-rojo);
+}
+.p-button:enabled:hover {
+    color: #ffffff;
+    background: var(--color-rojo);
+    border-color: var(--color-rojo);
+}
+.noHeader.p-datatable table thead tr {
+    display: none;
+}
+.p-datatable-tablewrapper .p-treetable thead th,
+.p-treetable tbody td,
+.p-treetable tfoot tbody {
+    border-style: none;
+    text-align: center;
+}
+
+.p-treetable .p-column-filter {
+    display: none !important;
+}
+.p-datatable tbody td {
+    border: solid 1px #666 !important;
+    font-size: 12px !important;
+}
+
+.p-selectable-row.p-highlight {
+    border: 1px solid #666;
+    color: #fff !important;
+    text-shadow: 1px 1px 1px #333;
+    background: #aaa !important;
+}
+
+.p-datatable thead th {
+    font-size: var(--tamañoFuenteTablaBody);
+    background: var(--color-rojo) !important;
+    border: solid 1px #d8d8d8 !important;
+    color: var(--color-blanco) !important;
+
+}
+.datatable-title {
+    font-size: 15px !important;
+    background: var(--color-rojo) !important;
+    border: solid 1px #d8d8d8 !important;
+    color: var(--color-blanco) !important;
+}
+.p-datatable .p-datatable-tbody > tr:focus {
+    outline: none;
+    outline-offset: none;
+}
+.p-paginator.p-paginator-bottom {
+    border-width: 0;
+    background: #f2f2f200;
+}
+.p-datatable-empty-message {
+    text-align: center;
+}
+.p-datatable table {
+    table-layout: fixed;
+}
+.p-datatable .p-selection-column .p-chkbox-all {
+    display: none !important;
+}
+.p-datatable thead th,
+.p-datatable tbody td,
+.p-datatable tfoot td,
+.p-datatable tfoot th {
+    padding: 0px 5px !important;
+    text-align: center !important;
+    font-weight: bold;
+}
+
+.p-datatable .p-column-filter {
+    display: none !important;
+}
+
+.p-paginator {
+    background-image: -webkit-linear-gradient(90deg, #da272d 10%, var(--color-blanco) 0%);
+    padding: 5px !important;
+}
+.p-paginator-page,
+.p-paginator-first,
+.p-paginator-prev,
+.p-paginator-next,
+.p-paginator-last {
+    height: 20px !important;
+    width: auto;
+    min-width: 20px;
+    font-size: 10px !important;
+    font-weight: bold;
+    color: white;
+    padding: 0;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border: transparent;
+    border-radius: 50% !important;
+    box-shadow: 1px 1px 1px 1px #676767;
+    margin: 2px /*margin: 0 2px;*/;
+}
+
+.p-paginator-page:hover,
+.p-paginator-first:hover,
+.p-paginator-prev:hover,
+.p-paginator-next:hover,
+.p-paginator-last:hover {
+    border: 1px solid #a8a8a8;
+    color: black !important;
+}
+.p-paginator
+.p-paginator-pages
+.p-paginator-page.p-highlight {
+    background: red;
+    border-color: red;
+    color: white;
+}
+.p-paginator .p-dropdown {
+    height: 25px;
+}
+.p-dropdown .p-dropdown-label {
+    padding: 0px 5px;
+    font-weight: 500;
+    color: black !important;
+}
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    color: white;
+    background: var(--color-rojo);
+}
+.p-dropdown:not(.p-disabled):hover {
+    border-color: var(--color-rojo);
+}
+.p-dropdown:not(.p-disabled).p-focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.2rem #ed948e;
+    border-color: var(--color-rojo);
+}
+.p-button.p-button-icon-only {
+    width: auto;
+    color: var(--color-negro);
+    background: none;
+    border: 1px solid var(--color-negro);
+}
+
+/*Estilo para fileupload*/
+
+.p-fileupload .p-fileupload-buttonbar {
+  background: #f8f9fa;
+  padding: 1rem;
+  border: 1px solid #dee2e6;
+  color: #495057;
+  border-bottom: 0 none;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.p-fileupload .p-fileupload-buttonbar .p-button {
+  margin-right: 0.5rem;
+}
+.p-fileupload .p-fileupload-buttonbar .p-button.p-fileupload-choose.p-focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem var(--color-rosa);
+}
+.p-fileupload .p-fileupload-content {
+  background: #ffffff;
+  padding: 2rem 1rem;
+  border: 1px solid #dee2e6;
+  color: #495057;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.p-fileupload .p-progressbar {
+  height: 0.25rem;
+}
+.p-fileupload .p-fileupload-row > div {
+  padding: 1rem 1rem;
+}
+.p-fileupload.p-fileupload-advanced .p-message {
+  margin-top: 0;
+}
+
+.p-fileupload-choose:not(.p-disabled):hover {
+  background: var(--color-rojo);
+  color: #ffffff;
+  border-color: var(--color-rojo);
+}
+.p-fileupload-choose:not(.p-disabled):active {
+  background: var(--color-rojo);
+  color: #ffffff;
+  border-color: var(--color-rojo);
+}
+
+/*Estilo para tabs*/
+
+.p-tabview .p-tabview-nav {
+  background: #ffffff;
+  border: 1px solid #dee2e6;
+  border-width: 0 0 2px 0;
+}
+.p-tabview .p-tabview-nav li {
+  margin-right: 0;
+}
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  border: solid #dee2e6;
+  border-width: 0 0 2px 0;
+  border-color: transparent transparent #dee2e6 transparent;
+  background: #ffffff;
+  color: #6c757d;
+  padding: 1rem;
+  font-weight: 600;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  transition: box-shadow 0.2s;
+  margin: 0 0 -2px 0;
+}
+.p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: inset 0 0 0 0rem var(--color-rosa);
+}
+.p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
+  background: #ffffff;
+  border-color: #6c757d;
+  color: #6c757d;
+}
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #ffffff;
+  border-color: var(--color-rojo);
+  color: var(--color-rojo);
+}
+.p-tabview .p-tabview-left-icon {
+  margin-right: 0.5rem;
+}
+.p-tabview .p-tabview-right-icon {
+  margin-left: 0.5rem;
+}
+.p-tabview .p-tabview-close {
+  margin-left: 0.5rem;
+}
+.p-tabview .p-tabview-nav-btn.p-link {
+  background: #ffffff;
+  color: var(--color-rojo);
+  width: 2.357rem;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 0;
+}
+.p-tabview .p-tabview-nav-btn.p-link:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: inset 0 0 0 0.2rem var(--color-rosa);
+}
+.p-tabview .p-tabview-panels {
+  background: #ffffff;
+  padding: 1rem;
+  border: 0 none;
+  color: #495057;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+/*Estilo para botones tipo texto*/
+
+.p-button.p-button-text {
+  background-color: transparent;
+  color: var(--color-rojo);
+  border-color: transparent;
+}
+.p-button.p-button-text:enabled:hover {
+  background: rgba(33, 150, 243, 0.04);
+  color: var(--color-rojo);
+  border-color: transparent;
+}
+.p-button.p-button-text:enabled:active {
+  background: rgba(33, 150, 243, 0.16);
+  color: var(--color-rojo);
+  border-color: transparent;
+}
+.p-button.p-button-text.p-button-plain {
+  color: var(--color-blanco);
+}
+.p-button.p-button-text.p-button-plain:enabled:hover {
+  background: var(--color-blanco);
+  color: var(--color-blanco);
+}
+.p-button.p-button-text.p-button-plain:enabled:active {
+  background: var(--color-blanco);
+  color: var(--color-blanco);
+}
+
+/*Estilo para botones tipo link*/
+
+.p-button.p-button-link {
+  color: var(--color-rojo);
+  background: transparent;
+  border: transparent;
+}
+.p-button.p-button-link:enabled:hover {
+  background: transparent;
+  color: var(--color-rojo);
+  border-color: transparent;
+}
+.p-button.p-button-link:enabled:hover .p-button-label {
+  text-decoration: underline;
+}
+.p-button.p-button-link:enabled:focus {
+  background: transparent;
+  box-shadow: 0 0 0 0rem var(--color-rosa);
+  border-color: transparent;
+}
+.p-button.p-button-link:enabled:active {
+  background: transparent;
+  color: var(--color-rojo);
+  border-color: transparent;
+}
+
+/* Estilo para mensajes */
+
+.p-message {
+  margin: 1rem 0;
+  border-radius: 3px;
+}
+.p-message .p-message-wrapper {
+  padding: 1rem 1.5rem;
+}
+.p-message .p-message-close {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: transparent;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.p-message .p-message-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+.p-message .p-message-close:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem var(--color-rosa);
+}
+.p-message.p-message-info {
+  background: var(--color-rosa);
+  border: solid var(--color-rosa);
+  border-width: 0 0 0 6px;
+  color: var(--color-rojo);
+}
+.p-message.p-message-info .p-message-icon {
+  color: var(--color-rojo);
+}
+.p-message.p-message-info .p-message-close {
+  color: var(--color-rojo);
+}

@@ -1,0 +1,61 @@
+<p-messages></p-messages>
+
+<p-card class="card">
+  <div class="flex justify-content-center mt-3">
+    <div class="flex align-items-center justify-content-center">
+      <div class="flex flex-column">
+        <label>Cargar Orden *</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-content-center mt-3">
+    <div class="flex align-items-center justify-content-center">
+      <div class="flex flex-column">
+        <small>{{fileName}}</small>
+      </div>
+    </div>
+    <div class="flex align-items-center justify-content-center ml-4">
+      <button
+        *ngIf="fileUpload"
+        pButton
+        type="button"
+        label="Eliminar"
+        icon="pi pi-times"
+        (click)="removeFile()"
+        class="p-button-link">
+      </button>
+    </div>
+  </div>
+
+  <div class="flex justify-content-center mt-3">
+    <div class="flex align-items-center justify-content-center mr-4">
+      <p-fileUpload
+        *ngIf="!fileUpload"
+        id="fUpload"
+        mode="basic"
+        name="demo[]"
+        #form
+        (uploadHandler)="uploadHandler( form )"
+        [customUpload]="true"
+        [auto]="true"
+        chooseLabel="Cargar Archivo"
+        class="p-button p-button-raised p-button-rounded">
+      </p-fileUpload>
+    </div>
+  </div>
+
+  <div class="flex justify-content-center mb-3">
+    <div class="flex align-items-center justify-content-center">
+      <button
+        *ngIf="fileUpload"
+        pButton
+        type="button"
+        label="Enviar"
+        icon="pi pi-check"
+        (click)="sendFile()"
+        class="p-button-raised p-button-rounded">
+      </button>
+    </div>
+  </div>
+</p-card>
