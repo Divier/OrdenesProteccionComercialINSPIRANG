@@ -3,9 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { OrderModule } from './modules/order/order.module';
 
 import { AppComponent } from './app.component';
+
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -15,11 +16,10 @@ import { AppComponent } from './app.component';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AppRoutingModule,
-    OrderModule
+    AppRoutingModule
   ],
   providers: [
-
+    MessageService
   ],
   bootstrap: [
     AppComponent

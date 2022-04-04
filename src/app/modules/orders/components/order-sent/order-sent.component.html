@@ -1,0 +1,26 @@
+<p-messages hideTransitionOptions="500ms"></p-messages>
+<p-progressSpinner *ngIf="statusElement"></p-progressSpinner>
+<p-card class="card flex justify-content-center mt-3" *ngIf="lstOrdSent.length > 0">
+  <p-table [value]="lstOrdSent" selectionMode="single" [(selection)]="selOrdSent" dataKey="fileName" [paginator]="true"
+    [rows]="5" [rowsPerPageOptions]="[5,10,25,50]" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Archivo</th>
+        <th>Resultado Validacion</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-orderSent>
+      <tr [pSelectableRow]="orderSent">
+        <td>{{orderSent}}</td>
+        <td>
+          <button pButton type="button" label="Descargar" (click)="downloadFile(orderSent)" class="p-button-link">
+            <p-progressSpinner *ngIf="statusElement2"></p-progressSpinner>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+<div *ngIf="lstOrdSent.length == 0 && !statusElement">
+  <small><strong>*</strong> Sin registros para mostrar con relacion a ordenes cargadas</small>
+</div>

@@ -456,3 +456,17 @@ label {
 .p-message.p-message-info .p-message-close {
   color: var(--color-rojo);
 }
+
+/* Estilo para progress-spinner */
+
+.p-progress-spinner-circle {
+  stroke: var(--color-rojo) !important;
+}
+
+.p-progress-spinner {
+  position: relative;
+  margin: 0 auto;
+  width: 50px !important;
+  height: 50px !important;
+  display: inline-block;
+}
