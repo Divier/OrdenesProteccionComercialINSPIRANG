@@ -52,7 +52,7 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
         },
         error: (err) => {
           console.log(err);
-          this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_ERROR).value, true);
+          this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_LOAD_ERROR).value, true);
           this.statusElement = !this.statusElement;
         }
       })

@@ -68,24 +68,22 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
               this.showMessage(ordErr.message, true);
             }
           }
-          console.log(ordPro);
-          console.log(ordErr);
           this.statusElement = !this.statusElement;
         }
       });
   }
 
   loadTableOrdPro() {
-    return this.opService.listOrders2(Constants.ID_ORDPC_ERICSSON_PROCESED).
+    return this.opService.listOrders(Constants.ID_ORDPC_ERICSSON_PROCESED).
       pipe(
-        catchError(error => of({ message: "Error Procesadas" }))
+        catchError(error => of({ message: getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_PROCESS_ERROR).value }))
       )
   }
 
   loadTableOrdErr() {
-    return this.opService.listOrders2(Constants.ID_ORDPC_ERICSSON_ERROR).
+    return this.opService.listOrders(Constants.ID_ORDPC_ERICSSON_ERROR).
       pipe(
-        catchError(error => of({ message: "Error Error" }))
+        catchError(error => of({ message: getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_ERROR_ERROR).value }))
       )
   }
 

@@ -31,8 +31,8 @@
 
   <div class="flex justify-content-center mb-3">
     <div class="flex align-items-center justify-content-center">
-      <button *ngIf="fileUpload" pButton label="Enviar" icon="pi pi-check" (click)="sendFile()"
-        [disabled]="statusElement" class="p-button-raised p-button-rounded">
+      <button *ngIf="fileUpload" pButton label="Enviar" (click)="sendFile()" [disabled]="statusElement"
+        class="p-button-raised p-button-rounded">
       </button>
     </div>
   </div>
