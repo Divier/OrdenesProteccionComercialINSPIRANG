@@ -56,36 +56,41 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
           if (status) {
             this.lstOrdProc = ["hola"];
             this.lstOrdErr = ["hola"];
-          } else if (ordPro.status == Constants.WS_OK_CPO) {
-            this.lstOrdProc = ["hola"];
-          } else if (ordErr.status == Constants.WS_OK_CPO) {
-            this.lstOrdErr = ["hola"];
+          } else {
+            if (ordPro.status == Constants.WS_OK_CPO) {
+              this.lstOrdProc = ["hola"];
+            } else {
+              this.showMessage(ordPro.message, true);
+            }
+            if (ordErr.status == Constants.WS_OK_CPO) {
+              this.lstOrdErr = ["hola"];
+            } else {
+              this.showMessage(ordErr.message, true);
+            }
           }
+          console.log(ordPro);
+          console.log(ordErr);
           this.statusElement = !this.statusElement;
         }
       });
   }
 
   loadTableOrdPro() {
-    return this.opService.listOrders(Constants.ID_ORDPC_ERICSSON_PROCESED).
+    return this.opService.listOrders2(Constants.ID_ORDPC_ERICSSON_PROCESED).
       pipe(
-        catchError(error => of("Error Procesadas"))
+        catchError(error => of({ message: "Error Procesadas" }))
       )
   }
 
   loadTableOrdErr() {
-    return this.opService.listOrders(Constants.ID_ORDPC_ERICSSON_ERROR).
+    return this.opService.listOrders2(Constants.ID_ORDPC_ERICSSON_ERROR).
       pipe(
-        catchError(error => of("Error Error"))
+        catchError(error => of({ message: "Error Error" }))
       )
   }
 
   downloadFile(flag: number, fileName: string): void {
-    if (flag == 1) {
-      this.statusElement2 = !this.statusElement2;
-    } else {
-      this.statusElement3 = !this.statusElement3;
-    }
+    this.controlSpinner(flag);
     let directory = (flag == 1) ? Constants.ID_ORDPC_ERICSSON_PROCESED : Constants.ID_ORDPC_ERICSSON_ERROR;
     this.opService.downloadOrder(directory, fileName).
       subscribe({
@@ -95,21 +100,21 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
           } else {
             this.showMessage(resp.message, true);
           }
-          if (flag == 1) {
-            this.statusElement2 = !this.statusElement2;
-          } else {
-            this.statusElement3 = !this.statusElement3;
-          }
+          this.controlSpinner(flag);
         },
         error: (err) => {
           console.log(err);
           this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value, true);
-          if (flag == 1) {
-            this.statusElement2 = !this.statusElement2;
-          } else {
-            this.statusElement3 = !this.statusElement3;
-          }
+          this.controlSpinner(flag);
         }
       })
+  }
+
+  private controlSpinner(flag: number) {
+    if (flag == 1) {
+      this.statusElement2 = !this.statusElement2;
+    } else {
+      this.statusElement3 = !this.statusElement3;
+    }
   }
 }
