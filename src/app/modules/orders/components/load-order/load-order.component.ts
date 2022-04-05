@@ -67,11 +67,11 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
       this.opService.sentOrder({ 'file': base64 }).
         subscribe({
           next: (resp) => {
-            this.showMessage(resp.message);
+            this.showMessage(resp.message, true);
           },
           error: (err) => {
             console.log(err);
-            this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_SENT_ORDER_ERROR).value);
+            this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_SENT_ORDER_ERROR).value, true);
             this.statusElement = !this.statusElement;
           },
           complete: () => {
@@ -87,11 +87,11 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
     const fileType: string = this.fileUpload!._files[0].type;
 
     if (fileSize > Constants.SIZE_FILE_CSV) {
-      this.showMessage(Constants.MSG_ERROR_FILE_SIZE);
+      this.showMessage(Constants.MSG_ERROR_FILE_SIZE, true);
       return false;
     }
     if (!Constants.MIME_TYPE_CSV.includes(fileType)) {
-      this.showMessage(Constants.MSG_ERROR_FILE_TYPE)
+      this.showMessage(Constants.MSG_ERROR_FILE_TYPE, true)
       return false;
     }
     return true;

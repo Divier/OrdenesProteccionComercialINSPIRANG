@@ -16,8 +16,10 @@ export class BaseController {
       });
   }
 
-  showMessage(message: string) {
+  showMessage(message: string, autoHide: boolean) {
     this.messageService.add({ severity: 'info', summary: '', detail: message });
-    this.setTimeViewMessage();
+    if (autoHide) {
+      this.setTimeViewMessage();
+    }
   }
 }

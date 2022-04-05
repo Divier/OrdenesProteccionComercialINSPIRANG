@@ -90,7 +90,7 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
         },
         error: (err) => {
           console.log(err);
-          this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.DOWNLOAD_ORDER_ERROR).value);
+          this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.DOWNLOAD_ORDER_ERROR).value, true);
         }
       })
   }

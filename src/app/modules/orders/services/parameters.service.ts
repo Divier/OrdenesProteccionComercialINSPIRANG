@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { GetConstantsResponse } from 'src/app/core/interfaces/parameter.interface';
 import { Constants } from 'src/app/core/utils/constants';
 import { environment } from 'src/environments/environment';

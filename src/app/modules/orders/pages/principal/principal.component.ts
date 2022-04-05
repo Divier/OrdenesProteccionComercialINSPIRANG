@@ -12,6 +12,7 @@ import { Constants } from '../../../../core/utils/constants';
 export class PrincipalComponent extends BaseController implements OnInit {
 
   statusElement: boolean = true;
+  viewPrincipal: boolean = false;
 
   enabled0: boolean = true;
   enabled1: boolean = false;
@@ -37,14 +38,15 @@ export class PrincipalComponent extends BaseController implements OnInit {
             const { getConstantsResponse: constant } = resp.data;
             if (constant.length > 0) {
               this.sessionService.setParamInfo(constant);
+              this.viewPrincipal = true;
             } else {
-              this.showMessage(Constants.MSG_ERROR_ZERO_PARAMETERS);
+              this.showMessage(Constants.MSG_ERROR_ZERO_PARAMETERS, false);
             }
           }
           this.statusElement = !this.statusElement;
         },
         error: () => {
-          this.showMessage(Constants.MSG_ERROR_READ_PARAMETERS);
+          this.showMessage(Constants.MSG_ERROR_READ_PARAMETERS, false);
           this.statusElement = !this.statusElement;
         }
       })

@@ -1,4 +1,3 @@
-<p-messages hideTransitionOptions="500ms"></p-messages>
 <p-progressSpinner *ngIf="statusElement"></p-progressSpinner>
 <p-card class="card flex justify-content-center mt-3" *ngIf="lstOrdSent.length > 0">
   <p-table [value]="lstOrdSent" selectionMode="single" [(selection)]="selOrdSent" dataKey="fileName" [paginator]="true"
@@ -13,8 +12,8 @@
       <tr [pSelectableRow]="orderSent">
         <td>{{orderSent}}</td>
         <td>
-          <button pButton type="button" label="Descargar" (click)="downloadFile(orderSent)" class="p-button-link">
-            <p-progressSpinner *ngIf="statusElement2"></p-progressSpinner>
+          <button pButton type="button" label="Descargar" (click)="downloadFile(orderSent)" [loading]="statusElement2"
+            class="p-button-link">
           </button>
         </td>
       </tr>

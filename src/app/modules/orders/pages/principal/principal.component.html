@@ -1,5 +1,6 @@
 <p-progressSpinner *ngIf="statusElement"></p-progressSpinner>
-<p-tabView (onChange)="handleChange($event)">
+<p-messages hideTransitionOptions="500ms"></p-messages>
+<p-tabView (onChange)="handleChange($event)" *ngIf="viewPrincipal">
   <p-tabPanel header="Cargar Orden">
     <app-load-order *ngIf="enabled0"></app-load-order>
   </p-tabPanel>
