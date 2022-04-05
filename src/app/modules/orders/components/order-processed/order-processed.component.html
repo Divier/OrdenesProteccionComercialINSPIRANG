@@ -16,7 +16,7 @@
         <td>{{orderProc}}</td>
         <td>
           <button pButton type="button" label="Descargar" (click)="downloadFile(1, orderProc)"
-            class="p-button-link">
+            [loading]="statusElement2" class="p-button-link">
           </button>
         </td>
       </tr>
@@ -40,7 +40,7 @@
       <tr [pSelectableRow]="orderErr">
         <td>{{orderErr}}</td>
         <td>
-          <button pButton type="button" label="Descargar" (click)="downloadFile(2, orderErr)"
+          <button pButton type="button" label="Descargar" (click)="downloadFile(2, orderErr)" [loading]="statusElement3"
             class="p-button-link">
           </button>
         </td>
@@ -53,8 +53,10 @@
   <small><strong>*</strong> Sin registros para mostrar con relacion a ordenes procesadas y ordenes con error</small>
 </div>
 <ng-template #first>
-  <small *ngIf="lstOrdProc.length == 0 && !statusElement; else second"><strong>*</strong> Sin registros para mostrar con relacion a ordenes procesadas</small>
+  <small *ngIf="lstOrdProc.length == 0 && !statusElement; else second"><strong>*</strong> Sin registros para mostrar con
+    relacion a ordenes procesadas</small>
 </ng-template>
 <ng-template #second>
-  <small *ngIf="lstOrdErr.length == 0 && !statusElement"><strong>*</strong> Sin registros para mostrar con relacion a ordenes con error</small>
+  <small *ngIf="lstOrdErr.length == 0 && !statusElement"><strong>*</strong> Sin registros para mostrar con relacion a
+    ordenes con error</small>
 </ng-template>

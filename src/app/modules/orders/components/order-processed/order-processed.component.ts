@@ -15,6 +15,8 @@ import { catchError, forkJoin, of } from 'rxjs';
 export class OrderProcessedComponent extends BaseController implements OnInit, OnDestroy {
 
   statusElement: boolean = true;
+  statusElement2: boolean = false;
+  statusElement3: boolean = false;
 
   lstOrdProc: string[] = [];
   selOrdProc: string | undefined;
@@ -59,8 +61,6 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
           } else if (ordErr.status == Constants.WS_OK_CPO) {
             this.lstOrdErr = ["hola"];
           }
-          //console.log(ordPro);
-          //console.log(ordErr);
           this.statusElement = !this.statusElement;
         }
       });
@@ -69,28 +69,46 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
   loadTableOrdPro() {
     return this.opService.listOrders(Constants.ID_ORDPC_ERICSSON_PROCESED).
       pipe(
-        catchError(error => of(error))
+        catchError(error => of("Error Procesadas"))
       )
   }
 
   loadTableOrdErr() {
     return this.opService.listOrders(Constants.ID_ORDPC_ERICSSON_ERROR).
       pipe(
-        catchError(error => of(error))
+        catchError(error => of("Error Error"))
       )
   }
 
   downloadFile(flag: number, fileName: string): void {
+    if (flag == 1) {
+      this.statusElement2 = !this.statusElement2;
+    } else {
+      this.statusElement3 = !this.statusElement3;
+    }
     let directory = (flag == 1) ? Constants.ID_ORDPC_ERICSSON_PROCESED : Constants.ID_ORDPC_ERICSSON_ERROR;
     this.opService.downloadOrder(directory, fileName).
       subscribe({
         next: (resp) => {
-          console.log(resp);
-          saveAs(convertBase64ToBlobForDownload("77u/Q0FNUE8gMTtDQU1QTyAyO0NBTVBPIDM7Q0FNUE8gNDtDQU1QTyA1DQpBO0I7QztEO0UNCkY7RztIO0k7Sg0KSztMO007TjvDkQ0KTztQO1E7UjtTDQo="), fileName);
+          if (resp.status == Constants.WS_OK_CPO) {
+            saveAs(convertBase64ToBlobForDownload("77u/Q0FNUE8gMTtDQU1QTyAyO0NBTVBPIDM7Q0FNUE8gNDtDQU1QTyA1DQpBO0I7QztEO0UNCkY7RztIO0k7Sg0KSztMO007TjvDkQ0KTztQO1E7UjtTDQo="), fileName);
+          } else {
+            this.showMessage(resp.message, true);
+          }
+          if (flag == 1) {
+            this.statusElement2 = !this.statusElement2;
+          } else {
+            this.statusElement3 = !this.statusElement3;
+          }
         },
         error: (err) => {
           console.log(err);
-          this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.DOWNLOAD_ORDER_ERROR).value, true);
+          this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value, true);
+          if (flag == 1) {
+            this.statusElement2 = !this.statusElement2;
+          } else {
+            this.statusElement3 = !this.statusElement3;
+          }
         }
       })
   }
