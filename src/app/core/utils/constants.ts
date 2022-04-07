@@ -28,6 +28,10 @@ export class Constants {
   public static MSG_ERROR_ZERO_PARAMETERS: string = 'No se cargo ningun parametro utilizado en la aplicacion';
   public static MSG_ERROR_FILE_SIZE: string = "El archivo seleccionado supera el tamaño permitido";
   public static MSG_ERROR_FILE_TYPE: string = "El archivo seleccionado no es del tipo permitido";
+  public static MSG_ERROR_ORDER_LOAD: string = "Sin registros para mostrar con relacion a ordenes cargadas";
+  public static MSG_ERROR_ORDER_PROCESSED: string = "Sin registros para mostrar con relacion a ordenes procesadas";
+  public static MSG_ERROR_ORDER_ERROR: string = "Sin registros para mostrar con relacion a ordenes con error";
+  public static MSG_ERROR_ORDER_PROCESSED_AND_ERROR: string = "Sin registros para mostrar con relacion a ordenes procesadas y ordenes con error";
 
   // Parameters
   public static ORDPC_HEADER_FIELD_TRANSACTION_ID: string = 'ORDPC_HEADER_FIELD_TRANSACTION_ID';

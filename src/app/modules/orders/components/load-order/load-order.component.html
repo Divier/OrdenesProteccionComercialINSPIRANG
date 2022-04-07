@@ -1,45 +1,48 @@
-<p-card class="card">
-  <div class="flex justify-content-center mt-3">
-    <div class="flex align-items-center justify-content-center">
-      <div class="flex flex-column">
-        <label>Cargar Orden *</label>
+<p-messages hideTransitionOptions="500ms"></p-messages>
+<div class="animate__animated animate__zoomInDown">
+  <p-card class="card">
+    <div class="flex justify-content-center mt-3">
+      <div class="flex align-items-center justify-content-center">
+        <div class="flex flex-column">
+          <label>Cargar Orden *</label>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="flex justify-content-center mt-3">
-    <div class="flex align-items-center justify-content-center">
-      <div class="flex flex-column">
-        <small>{{fileName}}</small>
+    <div class="flex justify-content-center mt-3">
+      <div class="flex align-items-center justify-content-center">
+        <div class="flex flex-column">
+          <small>{{fileName}}</small>
+        </div>
+      </div>
+      <div class="flex align-items-center justify-content-center ml-4">
+        <button *ngIf="fileUpload" pButton type="button" label="Eliminar" icon="pi pi-times" (click)="removeFile()"
+          [disabled]="statusElement" class="p-button-link">
+        </button>
       </div>
     </div>
-    <div class="flex align-items-center justify-content-center ml-4">
-      <button *ngIf="fileUpload" pButton type="button" label="Eliminar" icon="pi pi-times" (click)="removeFile()"
-        [disabled]="statusElement" class="p-button-link">
-      </button>
-    </div>
-  </div>
 
-  <div class="flex justify-content-center mt-3">
-    <div class="flex align-items-center justify-content-center mr-4">
-      <p-fileUpload *ngIf="!fileUpload" id="fUpload" mode="basic" name="demo[]" #form
-        (uploadHandler)="uploadHandler( form )" [customUpload]="true" [auto]="true" chooseLabel="Cargar Archivo"
-        class="p-button p-button-raised p-button-rounded">
-      </p-fileUpload>
+    <div class="flex justify-content-center mt-3">
+      <div class="flex align-items-center justify-content-center mr-4">
+        <p-fileUpload *ngIf="!fileUpload" id="fUpload" mode="basic" name="demo[]" #form
+          (uploadHandler)="uploadHandler( form )" [customUpload]="true" [auto]="true" chooseLabel="Cargar Archivo"
+          class="p-button p-button-raised p-button-rounded">
+        </p-fileUpload>
+      </div>
     </div>
-  </div>
 
-  <div class="flex justify-content-center mb-3">
-    <div class="flex align-items-center justify-content-center">
-      <button *ngIf="fileUpload" pButton label="Enviar" (click)="sendFile()" [disabled]="statusElement"
-        class="p-button-raised p-button-rounded">
-      </button>
+    <div class="flex justify-content-center mb-3">
+      <div class="flex align-items-center justify-content-center">
+        <button *ngIf="fileUpload" pButton label="Enviar" (click)="sendFile()" [disabled]="statusElement"
+          class="p-button-raised p-button-rounded">
+        </button>
+      </div>
     </div>
-  </div>
 
-  <div class="flex justify-content-center mb-3" *ngIf="statusElement">
-    <div class="flex align-items-center justify-content-center">
-      <p-progressSpinner></p-progressSpinner>
+    <div class="flex justify-content-center mb-3" *ngIf="statusElement">
+      <div class="flex align-items-center justify-content-center">
+        <p-progressSpinner></p-progressSpinner>
+      </div>
     </div>
-  </div>
-</p-card>
+  </p-card>
+</div>

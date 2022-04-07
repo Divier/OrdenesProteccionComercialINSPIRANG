@@ -24,6 +24,10 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
   lstOrdErr: string[] = [];
   selOrdErr: string | undefined;
 
+  msgErrorOrderProcess: string = Constants.MSG_ERROR_ORDER_PROCESSED;
+  msgErrorOrderError: string = Constants.MSG_ERROR_ORDER_ERROR;
+  msgErrorOrderProcessAndError: string = Constants.MSG_ERROR_ORDER_PROCESSED_AND_ERROR;
+
   constructor(
     private opService: OperationsService,
     private primengConfig: PrimeNGConfig,

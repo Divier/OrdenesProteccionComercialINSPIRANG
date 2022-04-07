@@ -1,13 +1,15 @@
 <p-progressSpinner *ngIf="statusElement"></p-progressSpinner>
-<p-messages hideTransitionOptions="500ms"></p-messages>
-<p-tabView (onChange)="handleChange($event)" *ngIf="viewPrincipal">
-  <p-tabPanel header="Cargar Orden">
-    <app-load-order *ngIf="enabled0"></app-load-order>
-  </p-tabPanel>
-  <p-tabPanel header="Ordenes Cargadas">
-    <app-order-sent *ngIf="enabled1"></app-order-sent>
-  </p-tabPanel>
-  <p-tabPanel header="Ordenes Procesadas">
-    <app-order-processed *ngIf="enabled2"></app-order-processed>
-  </p-tabPanel>
-</p-tabView>
+<p-messages hideTransitionOptions="500ms" *ngIf="!viewPrincipal"></p-messages>
+<div class="animate__animated animate__fadeInDown">
+  <p-tabView (onChange)="handleChange($event)" *ngIf="viewPrincipal">
+    <p-tabPanel header="Cargar Orden">
+      <app-load-order *ngIf="enabled0"></app-load-order>
+    </p-tabPanel>
+    <p-tabPanel header="Ordenes Cargadas">
+      <app-order-sent *ngIf="enabled1"></app-order-sent>
+    </p-tabPanel>
+    <p-tabPanel header="Ordenes Procesadas">
+      <app-order-processed *ngIf="enabled2"></app-order-processed>
+    </p-tabPanel>
+  </p-tabView>
+</div>

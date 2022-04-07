@@ -19,6 +19,8 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
   lstOrdSent: string[] = [];
   selOrdSent: string | undefined;
 
+  msgErrorOrderLoad: string = Constants.MSG_ERROR_ORDER_LOAD;
+
   constructor(
     private opService: OperationsService,
     private sessionService: SessionService,
@@ -40,7 +42,7 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
   }
 
   loadTableOrdLoa() {
-    this.opService.listOrders('Constants.ID_ORDPC_CLARO_LOADED').
+    this.opService.listOrders(Constants.ID_ORDPC_CLARO_LOADED).
       subscribe({
         next: (resp) => {
           if (resp.status == Constants.WS_OK_CPO) {

@@ -1,62 +1,65 @@
+<p-messages hideTransitionOptions="500ms"></p-messages>
 <p-progressSpinner *ngIf="statusElement"></p-progressSpinner>
-<p-card class="card flex justify-content-center mt-3" *ngIf="lstOrdProc.length > 0">
-  <ng-template pTemplate="header">
-    <strong>Ordenes Procesadas</strong>
-  </ng-template>
-  <p-table [value]="lstOrdProc" selectionMode="single" [(selection)]="selOrdProc" dataKey="fileName" [paginator]="true"
-    [rows]="5" [rowsPerPageOptions]="[5,10,25,50]" responsiveLayout="scroll">
+<div class="animate__animated animate__zoomInDown">
+  <p-card class="card flex justify-content-center mt-3" *ngIf="lstOrdProc.length > 0">
     <ng-template pTemplate="header">
-      <tr>
-        <th>Archivo</th>
-        <th>Resultado Validacion</th>
-      </tr>
+      <strong>Ordenes Procesadas</strong>
     </ng-template>
-    <ng-template pTemplate="body" let-orderProc>
-      <tr [pSelectableRow]="orderProc">
-        <td>{{orderProc}}</td>
-        <td>
-          <button pButton type="button" label="Descargar" (click)="downloadFile(1, orderProc)"
-            [loading]="statusElement2" class="p-button-link">
-          </button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</p-card>
+    <p-table [value]="lstOrdProc" selectionMode="single" [(selection)]="selOrdProc" dataKey="fileName"
+      [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,25,50]" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Archivo</th>
+          <th>Resultado Validacion</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-orderProc>
+        <tr [pSelectableRow]="orderProc">
+          <td>{{orderProc}}</td>
+          <td>
+            <button pButton type="button" label="Descargar" (click)="downloadFile(1, orderProc)"
+              [loading]="statusElement2" class="p-button-link">
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>
 
-<p-card class="card flex justify-content-center mt-5" *ngIf="lstOrdErr.length > 0">
-  <ng-template pTemplate="header">
-    <strong>Ordenes Con Error</strong>
-  </ng-template>
-  <p-table [value]="lstOrdErr" selectionMode="single" [(selection)]="selOrdErr" dataKey="fileName" [paginator]="true"
-    [rows]="5" [rowsPerPageOptions]="[5,10,25,50]" responsiveLayout="scroll">
+<div class="animate__animated animate__zoomInDown">
+  <p-card class="card flex justify-content-center mt-5" *ngIf="lstOrdErr.length > 0">
     <ng-template pTemplate="header">
-      <tr>
-        <th>Archivo</th>
-        <th>Resultado Validacion</th>
-      </tr>
+      <strong>Ordenes Con Error</strong>
     </ng-template>
-    <ng-template pTemplate="body" let-orderErr>
-      <tr [pSelectableRow]="orderErr">
-        <td>{{orderErr}}</td>
-        <td>
-          <button pButton type="button" label="Descargar" (click)="downloadFile(2, orderErr)" [loading]="statusElement3"
-            class="p-button-link">
-          </button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</p-card>
-
+    <p-table [value]="lstOrdErr" selectionMode="single" [(selection)]="selOrdErr" dataKey="fileName" [paginator]="true"
+      [rows]="5" [rowsPerPageOptions]="[5,10,25,50]" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Archivo</th>
+          <th>Resultado Validacion</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-orderErr>
+        <tr [pSelectableRow]="orderErr">
+          <td>{{orderErr}}</td>
+          <td>
+            <button pButton type="button" label="Descargar" (click)="downloadFile(2, orderErr)"
+              [loading]="statusElement3" class="p-button-link">
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>
 <div *ngIf="lstOrdProc.length == 0 && lstOrdErr.length == 0 && !statusElement; else first">
-  <small><strong>*</strong> Sin registros para mostrar con relacion a ordenes procesadas y ordenes con error</small>
+  <small><strong>*</strong> {{msgErrorOrderProcessAndError}}</small>
 </div>
 <ng-template #first>
-  <small *ngIf="lstOrdProc.length == 0 && !statusElement; else second"><strong>*</strong> Sin registros para mostrar con
-    relacion a ordenes procesadas</small>
+  <small *ngIf="lstOrdProc.length == 0 && !statusElement; else second"><strong>*</strong>
+    {{msgErrorOrderProcess}}</small>
 </ng-template>
 <ng-template #second>
-  <small *ngIf="lstOrdErr.length == 0 && !statusElement"><strong>*</strong> Sin registros para mostrar con relacion a
-    ordenes con error</small>
+  <small *ngIf="lstOrdErr.length == 0 && !statusElement"><strong>*</strong> {{msgErrorOrderError}}</small>
 </ng-template>
