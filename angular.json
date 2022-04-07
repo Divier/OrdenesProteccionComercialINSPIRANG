@@ -17,12 +17,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/OPC-web",
+            "outputPath": "dist/ComercialProtectionOrder",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "baseHref": "/OPC-web/",
+            "baseHref": "/ComercialProtectionOrder/",
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -38,7 +38,7 @@
           },
           "configurations": {
             "production": {
-              "baseHref": "/OPC-web/",
+              "baseHref": "/ComercialProtectionOrder/",
               "budgets": [
                 {
                   "type": "initial",
