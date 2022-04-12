@@ -29,7 +29,8 @@
 </div>
 
 <div class="animate__animated animate__zoomInDown">
-  <p-card class="card flex justify-content-center mt-7" *ngIf="lstOrdErr.length > 0">
+  <p-card class="card flex justify-content-center" [ngClass]="lstOrdProc.length > 0 ? 'mt-7' : ''"
+    *ngIf="lstOrdErr.length > 0">
     <ng-template pTemplate="header">
       <strong class="mx-3">Ordenes Con Error</strong>
     </ng-template>
@@ -56,12 +57,12 @@
   </p-card>
 </div>
 <div *ngIf="lstOrdProc.length == 0 && lstOrdErr.length == 0 && !statusElement; else first">
-  <small><strong>*</strong> {{msgErrorOrderProcessAndError}}</small>
+  <small class="mx-3"><strong>*</strong> {{msgErrorOrderProcessAndError}}</small>
 </div>
 <ng-template #first>
-  <small *ngIf="lstOrdProc.length == 0 && !statusElement; else second"><strong>*</strong>
+  <small class="mx-3" *ngIf="lstOrdProc.length == 0 && !statusElement; else second"><strong>*</strong>
     {{msgErrorOrderProcess}}</small>
 </ng-template>
 <ng-template #second>
-  <small *ngIf="lstOrdErr.length == 0 && !statusElement"><strong>*</strong> {{msgErrorOrderError}}</small>
+  <small class="mx-3" *ngIf="lstOrdErr.length == 0 && !statusElement"><strong>*</strong> {{msgErrorOrderError}}</small>
 </ng-template>
