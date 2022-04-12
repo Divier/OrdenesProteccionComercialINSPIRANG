@@ -41,12 +41,12 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
     }
   }
 
-  loadTableOrdLoa() {
+  loadTableOrdLoa(): void {
     this.opService.listOrders(Constants.ID_ORDPC_CLARO_LOADED).
       subscribe({
         next: (resp) => {
           if (resp.status == Constants.WS_OK_CPO) {
-            this.lstOrdSent = ["Hola"];
+            this.lstOrdSent = resp.data.files;
           } else {
             this.showMessage(resp.message, true);
           }
@@ -66,7 +66,8 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
       subscribe({
         next: (resp) => {
           if (resp.status == Constants.WS_OK_CPO) {
-            saveAs(convertBase64ToBlobForDownload("77u/Q0FNUE8gMTtDQU1QTyAyO0NBTVBPIDM7Q0FNUE8gNDtDQU1QTyA1DQpBO0I7QztEO0UNCkY7RztIO0k7Sg0KSztMO007TjvDkQ0KTztQO1E7UjtTDQo="), fileName);
+            console.log(resp);
+            saveAs(convertBase64ToBlobForDownload(resp.data.file), fileName);
           } else {
             this.showMessage(resp.message, true);
           }

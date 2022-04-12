@@ -6,7 +6,8 @@ import { BaseController } from '../../../../core/utils/base-controller';
 import { SessionService } from '../../services/session.service';
 import { convertBase64ToBlobForDownload, getObjectFromArray } from 'src/app/core/utils/utils';
 import { Constants } from '../../../../core/utils/constants';
-import { catchError, forkJoin, of } from 'rxjs';
+import { catchError, forkJoin, Observable, of } from 'rxjs';
+import { ListOrdersResponse } from '../../interfaces/list-orders-response.interface';
 
 @Component({
   selector: 'app-order-processed',
@@ -48,7 +49,7 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
     }
   }
 
-  processMultipleRequest() {
+  processMultipleRequest(): void {
     forkJoin({
       ordPro: this.loadTableOrdPro(),
       ordErr: this.loadTableOrdErr()
@@ -58,16 +59,16 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
           // Se verifica que ambos servicios hayan responido status = 'OK'
           const status = ordPro.status == Constants.WS_OK_CPO && ordErr.status == Constants.WS_OK_CPO;
           if (status) {
-            this.lstOrdProc = ["hola"];
-            this.lstOrdErr = ["hola"];
+            this.lstOrdProc = ordPro.data.files;
+            this.lstOrdErr = ordErr.data.files;
           } else {
             if (ordPro.status == Constants.WS_OK_CPO) {
-              this.lstOrdProc = ["hola"];
+              this.lstOrdProc = ordPro.data.files;
             } else {
               this.showMessage(ordPro.message, true);
             }
             if (ordErr.status == Constants.WS_OK_CPO) {
-              this.lstOrdErr = ["hola"];
+              this.lstOrdErr = ordErr.data.files;
             } else {
               this.showMessage(ordErr.message, true);
             }
@@ -77,14 +78,14 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
       });
   }
 
-  loadTableOrdPro() {
+  loadTableOrdPro(): Observable<any | ListOrdersResponse> {
     return this.opService.listOrders(Constants.ID_ORDPC_ERICSSON_PROCESED).
       pipe(
         catchError(error => of({ message: getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_PROCESS_ERROR).value }))
       )
   }
 
-  loadTableOrdErr() {
+  loadTableOrdErr(): Observable<any | ListOrdersResponse> {
     return this.opService.listOrders(Constants.ID_ORDPC_ERICSSON_ERROR).
       pipe(
         catchError(error => of({ message: getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_ERROR_ERROR).value }))
@@ -112,7 +113,7 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
       })
   }
 
-  private controlSpinner(flag: number) {
+  private controlSpinner(flag: number): void {
     if (flag == 1) {
       this.statusElement2 = !this.statusElement2;
     } else {

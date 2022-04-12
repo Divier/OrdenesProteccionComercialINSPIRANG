@@ -9,6 +9,7 @@ import { GeneralService } from './general.service';
 import { SessionService } from './session.service';
 import { SentOrderResponse } from '../interfaces/sent-order-response.interface';
 import { ListOrdersResponse } from '../interfaces/list-orders-response.interface';
+import { DownloadOrderResponse } from '../interfaces/download-order-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +51,7 @@ export class OperationsService extends GeneralService {
       );
   }
 
-  downloadOrder(directory: string, fileName: string) {
+  downloadOrder(directory: string, fileName: string): Observable<any | DownloadOrderResponse> {
     return this.get(`${this.urlDO}?directory=${directory}&fileName=${fileName}`, []).
       pipe(
         map(this.getWsResponseCPO)

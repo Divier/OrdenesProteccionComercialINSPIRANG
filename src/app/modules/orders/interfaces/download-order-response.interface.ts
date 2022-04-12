@@ -1,2 +1,4 @@
 import { CommonResponse } from './common-response.interface';
-export interface DownloadOrderResponse extends CommonResponse { }
+export interface DownloadOrderResponse extends CommonResponse {
+  file: string;
+}
