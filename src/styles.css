@@ -358,7 +358,7 @@ label {
 }
 .p-tabview .p-tabview-panels {
   background: #ffffff;
-  padding: 1rem;
+  padding: 0.5rem;
   border: 0 none;
   color: #495057;
   border-bottom-right-radius: 3px;
@@ -469,4 +469,39 @@ label {
   width: 50px !important;
   height: 50px !important;
   display: inline-block;
+}
+
+/* Estilo para dropdown de paginador de tablas */
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  padding: 0 !important;
+  text-align: center;
+}
+
+.p-dropdown-panel .p-dropdown-items:not(.p-dropdown-virtualscroll) {
+  padding: 5% 0 !important;
+}
+
+/* Estilo para botones de paginador de tablas */
+
+.p-link:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem var(--color-rosa);
+}
+
+/* Estilo para manejo de espaciado en card */
+
+.p-card .p-card-body {
+  padding: 0.5rem 0.5rem !important;
+}
+
+.p-card .p-card-content {
+  padding: 0.1rem 0.1rem !important;
+}
+
+/* Estilo para manejo de espaciado en divider */
+
+.p-divider.p-divider-horizontal {
+  margin: 0.5rem 0 !important;
 }

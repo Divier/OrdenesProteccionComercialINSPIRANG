@@ -8,6 +8,7 @@ import { MessageModule } from 'primeng/message';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
+import { DividerModule } from 'primeng/divider';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     RippleModule,
     TableModule,
     CardModule,
+    DividerModule,
     ProgressSpinnerModule
   ]
 })
