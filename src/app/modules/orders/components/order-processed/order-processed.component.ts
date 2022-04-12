@@ -16,8 +16,8 @@ import { ListOrdersResponse } from '../../interfaces/list-orders-response.interf
 export class OrderProcessedComponent extends BaseController implements OnInit, OnDestroy {
 
   statusElement: boolean = true;
-  statusElement2: boolean = false;
-  statusElement3: boolean = false;
+  statusElement2: boolean[] = [];
+  statusElement3: boolean[] = [];
 
   lstOrdProc: string[] = [];
   selOrdProc: string | undefined;
@@ -61,14 +61,18 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
           if (status) {
             this.lstOrdProc = ordPro.data.files;
             this.lstOrdErr = ordErr.data.files;
+            this.statusElement2 = new Array(this.lstOrdProc.length);
+            this.statusElement3 = new Array(this.lstOrdErr.length);
           } else {
             if (ordPro.status == Constants.WS_OK_CPO) {
               this.lstOrdProc = ordPro.data.files;
+              this.statusElement2 = new Array(this.lstOrdProc.length);
             } else {
               this.showMessage(ordPro.message, true);
             }
             if (ordErr.status == Constants.WS_OK_CPO) {
               this.lstOrdErr = ordErr.data.files;
+              this.statusElement3 = new Array(this.lstOrdErr.length);
             } else {
               this.showMessage(ordErr.message, true);
             }
@@ -92,32 +96,32 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
       )
   }
 
-  downloadFile(flag: number, fileName: string): void {
-    this.controlSpinner(flag);
+  downloadFile(flag: number, fileName: string, index: number): void {
+    this.controlSpinner(flag, index);
     let directory = (flag == 1) ? Constants.ID_ORDPC_ERICSSON_PROCESED : Constants.ID_ORDPC_ERICSSON_ERROR;
     this.opService.downloadOrder(directory, fileName).
       subscribe({
         next: (resp) => {
           if (resp.status == Constants.WS_OK_CPO) {
-            saveAs(convertBase64ToBlobForDownload("77u/Q0FNUE8gMTtDQU1QTyAyO0NBTVBPIDM7Q0FNUE8gNDtDQU1QTyA1DQpBO0I7QztEO0UNCkY7RztIO0k7Sg0KSztMO007TjvDkQ0KTztQO1E7UjtTDQo="), fileName);
+            saveAs(convertBase64ToBlobForDownload(resp.data.file), fileName);
           } else {
             this.showMessage(resp.message, true);
           }
-          this.controlSpinner(flag);
+          this.controlSpinner(flag, index);
         },
         error: (err) => {
           console.log(err);
           this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value, true);
-          this.controlSpinner(flag);
+          this.controlSpinner(flag, index);
         }
       })
   }
 
-  private controlSpinner(flag: number): void {
+  private controlSpinner(flag: number, index: number): void {
     if (flag == 1) {
-      this.statusElement2 = !this.statusElement2;
+      this.statusElement2[index] = !this.statusElement2[index];
     } else {
-      this.statusElement3 = !this.statusElement3;
+      this.statusElement3[index] = !this.statusElement3[index];
     }
   }
 }

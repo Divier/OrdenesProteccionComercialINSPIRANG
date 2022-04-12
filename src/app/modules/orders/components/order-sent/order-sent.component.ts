@@ -14,7 +14,7 @@ import { Constants } from 'src/app/core/utils/constants';
 export class OrderSentComponent extends BaseController implements OnInit, OnDestroy {
 
   statusElement: boolean = true;
-  statusElement2: boolean = false;
+  statusElement2: boolean[] = [];
 
   lstOrdSent: string[] = [];
   selOrdSent: string | undefined;
@@ -47,6 +47,7 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
         next: (resp) => {
           if (resp.status == Constants.WS_OK_CPO) {
             this.lstOrdSent = resp.data.files;
+            this.statusElement2 = new Array(this.lstOrdSent.length);
           } else {
             this.showMessage(resp.message, true);
           }
@@ -60,23 +61,22 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
       })
   }
 
-  downloadFile(fileName: string): void {
-    this.statusElement2 = !this.statusElement2;
+  downloadFile(fileName: string, index: number): void {
+    this.statusElement2[index] = true;
     this.opService.downloadOrder(Constants.ID_ORDPC_CLARO_LOADED, fileName).
       subscribe({
         next: (resp) => {
           if (resp.status == Constants.WS_OK_CPO) {
-            console.log(resp);
             saveAs(convertBase64ToBlobForDownload(resp.data.file), fileName);
           } else {
             this.showMessage(resp.message, true);
           }
-          this.statusElement2 = !this.statusElement2;
+          this.statusElement2[index] = false;
         },
         error: (err) => {
           console.log(err);
           this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value, true);
-          this.statusElement2 = !this.statusElement2;
+          this.statusElement2[index] = false;
         }
       })
   }

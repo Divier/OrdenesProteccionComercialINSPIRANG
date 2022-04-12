@@ -13,12 +13,12 @@
           <th>Resultado Validacion</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-orderProc>
-        <tr [pSelectableRow]="orderProc">
+      <ng-template pTemplate="body" let-orderProc let-i="rowIndex">
+        <tr>
           <td>{{orderProc}}</td>
           <td>
-            <button pButton type="button" label="Descargar" (click)="downloadFile(1, orderProc)"
-              [loading]="statusElement2" class="p-button-link">
+            <button pButton type="button" label="Descargar" (click)="downloadFile(1, orderProc, i)"
+              [loading]="statusElement2[i]" class="p-button-link">
             </button>
           </td>
         </tr>
@@ -40,12 +40,12 @@
           <th>Resultado Validacion</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-orderErr>
-        <tr [pSelectableRow]="orderErr">
+      <ng-template pTemplate="body" let-orderErr let-i="rowIndex">
+        <tr>
           <td>{{orderErr}}</td>
           <td>
-            <button pButton type="button" label="Descargar" (click)="downloadFile(2, orderErr)"
-              [loading]="statusElement3" class="p-button-link">
+            <button pButton type="button" label="Descargar" (click)="downloadFile(2, orderErr, i)"
+              [loading]="statusElement3[i]" class="p-button-link">
             </button>
           </td>
         </tr>

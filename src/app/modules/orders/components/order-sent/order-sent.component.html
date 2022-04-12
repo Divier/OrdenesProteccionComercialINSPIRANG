@@ -10,12 +10,12 @@
           <th>Resultado Validacion</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-orderSent>
-        <tr [pSelectableRow]="orderSent">
+      <ng-template pTemplate="body" let-orderSent let-i="rowIndex">
+        <tr>
           <td>{{orderSent}}</td>
           <td>
-            <button pButton type="button" label="Descargar" (click)="downloadFile(orderSent)" [loading]="statusElement2"
-              class="p-button-link">
+            <button pButton pRipple type="button" label="Descargar" (click)="downloadFile(orderSent, i)"
+              [loading]="statusElement2[i]" class="p-button-link">
             </button>
           </td>
         </tr>
