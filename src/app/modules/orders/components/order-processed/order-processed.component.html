@@ -17,7 +17,7 @@
         <tr>
           <td>{{orderProc}}</td>
           <td>
-            <button pButton type="button" label="Descargar" (click)="downloadFile(1, orderProc, i)"
+            <button pButton pRipple type="button" label="Descargar" (click)="downloadFile(1, orderProc, i)"
               [loading]="statusElement2[i]" class="p-button-link">
             </button>
           </td>
@@ -44,7 +44,7 @@
         <tr>
           <td>{{orderErr}}</td>
           <td>
-            <button pButton type="button" label="Descargar" (click)="downloadFile(2, orderErr, i)"
+            <button pButton pRipple type="button" label="Descargar" (click)="downloadFile(2, orderErr, i)"
               [loading]="statusElement3[i]" class="p-button-link">
             </button>
           </td>
