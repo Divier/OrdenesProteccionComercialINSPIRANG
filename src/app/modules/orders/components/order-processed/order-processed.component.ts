@@ -46,8 +46,8 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.ordpcEP = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_ERICSSON_PROCESED).value;
-    this.ordpcEE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_ERICSSON_ERROR).value;
+    this.ordpcEP = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_OPC_DIRID_ERICSSON_PROCESSED).value;
+    this.ordpcEE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_OPC_DIRID_ERICSSON_ERROR).value;
     this.ordpcCDOE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value;
     this.ordpcCLOPE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_PROCESS_ERROR).value;
     this.ordpcCLOEE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_ERROR_ERROR).value;

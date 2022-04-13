@@ -36,7 +36,7 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.ordpcCL = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CLARO_LOADED).value;
+    this.ordpcCL = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_OPC_DIRID_CLARO_AUDIT).value;
     this.ordpcCLOLE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_LOAD_ERROR).value;
     this.ordpcCDOE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value;
     this.loadTableOrdLoa();
