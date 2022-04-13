@@ -22,17 +22,17 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
   ordpcCSOE?: string;
 
   constructor(
-    private opService: OperationsService,
     private primengConfig: PrimeNGConfig,
-    private sessionService: SessionService,
-    protected override messageService: MessageService
+    private opService: OperationsService,
+    sessionService: SessionService,
+    messageService: MessageService
   ) {
-    super(messageService);
+    super(messageService, sessionService);
   }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.ordpcCSOE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_SENT_ORDER_ERROR).value;
+    this.ordpcCSOE = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_CONSUME_SENT_ORDER_ERROR).value;
   }
 
   ngOnDestroy(): void {
@@ -68,7 +68,7 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
         base64 = base64.replace(`data:${element};base64,`, '');
       });
       console.log(base64);
-      this.opService.sentOrder({ 'file': base64 }).
+      this.opService.sentOrder({ 'file': base64 }, this.timeOutSend).
         subscribe({
           next: (resp) => {
             this.showMessage(resp.message, true);

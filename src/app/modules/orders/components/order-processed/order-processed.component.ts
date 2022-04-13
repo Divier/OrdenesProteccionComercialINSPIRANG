@@ -29,28 +29,28 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
   msgErrorOrderError: string = Constants.MSG_ERROR_ORDER_ERROR;
   msgErrorOrderProcessAndError: string = Constants.MSG_ERROR_ORDER_PROCESSED_AND_ERROR;
 
-  ordpcEP?: string;
-  ordpcEE?: string;
+  ordpcDirEP?: string;
+  ordpcDirEE?: string;
   ordpcCDOE?: string;
   ordpcCLOPE?: string;
   ordpcCLOEE?: string;
 
   constructor(
-    private opService: OperationsService,
     private primengConfig: PrimeNGConfig,
-    private sessionService: SessionService,
-    protected override messageService: MessageService
+    private opService: OperationsService,
+    sessionService: SessionService,
+    messageService: MessageService
   ) {
-    super(messageService);
+    super(messageService, sessionService);
   }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.ordpcEP = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_OPC_DIRID_ERICSSON_PROCESSED).value;
-    this.ordpcEE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_OPC_DIRID_ERICSSON_ERROR).value;
-    this.ordpcCDOE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value;
-    this.ordpcCLOPE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_PROCESS_ERROR).value;
-    this.ordpcCLOEE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_ERROR_ERROR).value;
+    this.ordpcDirEP = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_OPC_DIRID_ERICSSON_PROCESSED).value;
+    this.ordpcDirEE = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_OPC_DIRID_ERICSSON_ERROR).value;
+    this.ordpcCDOE = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value;
+    this.ordpcCLOPE = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_CONSUME_LIST_ORDER_PROCESS_ERROR).value;
+    this.ordpcCLOEE = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_CONSUME_LIST_ORDER_ERROR_ERROR).value;
     this.processMultipleRequest();
   }
 
@@ -94,14 +94,14 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
   }
 
   private loadTableOrdPro(): Observable<any | ListOrdersResponse> {
-    return this.opService.listOrders(this.ordpcEP).
+    return this.opService.listOrders(this.ordpcDirEP, this.timeOutList).
       pipe(
         catchError(error => of({ message: this.ordpcCLOPE }))
       )
   }
 
   private loadTableOrdErr(): Observable<any | ListOrdersResponse> {
-    return this.opService.listOrders(this.ordpcEE).
+    return this.opService.listOrders(this.ordpcDirEE, this.timeOutList).
       pipe(
         catchError(error => of({ message: this.ordpcCLOEE }))
       )
@@ -109,8 +109,8 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
 
   downloadFile(flag: number, fileName: string, index: number): void {
     this.controlSpinner(flag, index);
-    let directory = (flag == 1) ? this.ordpcEP : this.ordpcEE;
-    this.opService.downloadOrder(directory, fileName).
+    const directory = (flag == 1) ? this.ordpcDirEP : this.ordpcDirEE;
+    this.opService.downloadOrder(directory, fileName, this.timeOutDownload).
       subscribe({
         next: (resp) => {
           if (resp.status == Constants.WS_OK_CPO) {

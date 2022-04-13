@@ -13,7 +13,7 @@ export class Constants {
   public static ID_STORAGE_PARAM_INFO: string = 'parametersInfo';
 
   // Response OK Services
-  public static WS_OK_GET_CONSTANTS = 'SUCCESS';
+  public static WS_OK_GET_CONSTANTS_AND_SERVICES = 'SUCCESS';
   public static WS_OK_CPO = 'OK';
 
   // Campos Header
@@ -21,7 +21,8 @@ export class Constants {
 
   // Mensajes Generales
   public static MSG_ERROR_READ_PARAMETERS: string = 'Ocurrio un problema al cargar los parametros de la aplicacion';
-  public static MSG_ERROR_ZERO_PARAMETERS: string = 'No se cargo ningun parametro utilizado en la aplicacion';
+  public static MSG_ERROR_READ_SERVICES: string = 'Ocurrio un problema al cargar los servicios de la aplicacion';
+  public static MSG_ERROR_INCOMPLETE_PARAMETERS_AND_SERVICES: string = 'No se cargo toda la configuracion requerida por la aplicacion';
   public static MSG_ERROR_FILE_SIZE: string = "El archivo seleccionado supera el tamaño permitido";
   public static MSG_ERROR_FILE_TYPE: string = "El archivo seleccionado no es del tipo permitido";
   public static MSG_ERROR_ORDER_LOAD: string = "Sin registros para mostrar con relacion a ordenes cargadas";
@@ -51,5 +52,17 @@ export class Constants {
     Constants.ORDPC_OPC_DIRID_CLARO_AUDIT,
     Constants.ORDPC_OPC_DIRID_ERICSSON_PROCESSED,
     Constants.ORDPC_OPC_DIRID_ERICSSON_ERROR
+  ];
+
+  // Services
+  public static WS_ORDPC_COMERCIAL_PROTECTION_ORDER_SEND: string = 'WS_ORDPC_COMERCIAL_PROTECTION_ORDER_SEND';
+  public static WS_ORDPC_COMERCIAL_PROTECTION_ORDER_LIST: string = 'WS_ORDPC_COMERCIAL_PROTECTION_ORDER_LIST';
+  public static WS_ORDPC_COMERCIAL_PROTECTION_ORDER_DOWNLOAD: string = 'WS_ORDPC_COMERCIAL_PROTECTION_ORDER_DOWNLOAD';
+
+  // Array of services
+  public static REQUIRED_SERVICES: string[] = [
+    Constants.WS_ORDPC_COMERCIAL_PROTECTION_ORDER_SEND,
+    Constants.WS_ORDPC_COMERCIAL_PROTECTION_ORDER_LIST,
+    Constants.WS_ORDPC_COMERCIAL_PROTECTION_ORDER_DOWNLOAD
   ];
 }

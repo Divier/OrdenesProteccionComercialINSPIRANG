@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GetConstantResponseElement } from 'src/app/core/interfaces/parameter.interface';
+import { EnvironmentInfo } from 'src/app/core/models/environment-info';
 import { Constants } from 'src/app/core/utils/constants';
 
 @Injectable({
@@ -7,16 +7,14 @@ import { Constants } from 'src/app/core/utils/constants';
 })
 export class SessionService {
 
-  environmentInfo!: GetConstantResponseElement;
-
   constructor() { }
 
-  getParamInfo(): GetConstantResponseElement | any {
-    const paramInfo = sessionStorage.getItem(Constants.ID_STORAGE_PARAM_INFO);
-    return (paramInfo) ? <GetConstantResponseElement>JSON.parse(paramInfo) : {} as GetConstantResponseElement;
+  getEnvInfo(): EnvironmentInfo {
+    const envInfo = sessionStorage.getItem(Constants.ID_STORAGE_PARAM_INFO);
+    return (envInfo) ? <EnvironmentInfo>JSON.parse(envInfo) : {} as EnvironmentInfo;
   }
 
-  setParamInfo(paramInfo: GetConstantResponseElement[]): void {
-    sessionStorage.setItem(Constants.ID_STORAGE_PARAM_INFO, JSON.stringify(paramInfo));
+  setEnvInfo(envInfo: EnvironmentInfo): void {
+    sessionStorage.setItem(Constants.ID_STORAGE_PARAM_INFO, JSON.stringify(envInfo));
   }
 }

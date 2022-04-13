@@ -6,6 +6,7 @@ import { Constants } from '../../../core/utils/constants';
 import { SentOrderResponse } from '../interfaces/sent-order-response.interface';
 import { ListOrdersResponse } from '../interfaces/list-orders-response.interface';
 import { DownloadOrderResponse } from '../interfaces/download-order-response.interface';
+import { GetWebServicesResponse } from '../../../core/interfaces/services.ext.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -74,9 +75,9 @@ export class GeneralService {
    * @param res respuesta del servicio
    * @returns objeto cons la estructura {status: boolean, data: Object}
    */
-  public getWsResponseGetConstants(res: GetConstantsResponse | any) {
+  public getWsResponse(res: GetConstantsResponse | GetWebServicesResponse) {
     const { response } = res;
-    if (response.result == Constants.WS_OK_GET_CONSTANTS) {
+    if (response.result == Constants.WS_OK_GET_CONSTANTS_AND_SERVICES) {
       return { status: true, data: { ...res } }
     }
     return {

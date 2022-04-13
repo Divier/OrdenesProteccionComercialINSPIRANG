@@ -21,24 +21,24 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
 
   msgErrorOrderLoad: string = Constants.MSG_ERROR_ORDER_LOAD;
 
-  ordpcCL?: string;
+  ordpcDirCL?: string;
   ordpcCLOLE?: string;
   ordpcCDOE?: string;
 
   constructor(
-    private opService: OperationsService,
-    private sessionService: SessionService,
     private primengConfig: PrimeNGConfig,
-    protected override messageService: MessageService
+    private opService: OperationsService,
+    sessionService: SessionService,
+    messageService: MessageService
   ) {
-    super(messageService);
+    super(messageService, sessionService);
   }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.ordpcCL = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_OPC_DIRID_CLARO_AUDIT).value;
-    this.ordpcCLOLE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_LOAD_ERROR).value;
-    this.ordpcCDOE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value;
+    this.ordpcDirCL = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_OPC_DIRID_CLARO_AUDIT).value;
+    this.ordpcCLOLE = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_CONSUME_LIST_ORDER_LOAD_ERROR).value;
+    this.ordpcCDOE = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value;
     this.loadTableOrdLoa();
   }
 
@@ -49,7 +49,7 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
   }
 
   private loadTableOrdLoa(): void {
-    this.opService.listOrders(this.ordpcCL).
+    this.opService.listOrders(this.ordpcDirCL, this.timeOutList).
       subscribe({
         next: (resp) => {
           if (resp.status == Constants.WS_OK_CPO) {
@@ -70,7 +70,7 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
 
   downloadFile(fileName: string, index: number): void {
     this.statusElement2[index] = true;
-    this.opService.downloadOrder(this.ordpcCL, fileName).
+    this.opService.downloadOrder(this.ordpcDirCL, fileName, this.timeOutDownload).
       subscribe({
         next: (resp) => {
           if (resp.status == Constants.WS_OK_CPO) {
