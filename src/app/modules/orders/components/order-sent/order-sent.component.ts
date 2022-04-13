@@ -21,6 +21,10 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
 
   msgErrorOrderLoad: string = Constants.MSG_ERROR_ORDER_LOAD;
 
+  ordpcCL?: string;
+  ordpcCLOLE?: string;
+  ordpcCDOE?: string;
+
   constructor(
     private opService: OperationsService,
     private sessionService: SessionService,
@@ -32,6 +36,9 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+    this.ordpcCL = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CLARO_LOADED).value;
+    this.ordpcCLOLE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_LOAD_ERROR).value;
+    this.ordpcCDOE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value;
     this.loadTableOrdLoa();
   }
 
@@ -41,8 +48,8 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
     }
   }
 
-  loadTableOrdLoa(): void {
-    this.opService.listOrders(Constants.ID_ORDPC_CLARO_LOADED).
+  private loadTableOrdLoa(): void {
+    this.opService.listOrders(this.ordpcCL).
       subscribe({
         next: (resp) => {
           if (resp.status == Constants.WS_OK_CPO) {
@@ -55,7 +62,7 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
         },
         error: (err) => {
           console.log(err);
-          this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_LOAD_ERROR).value, true);
+          this.showMessage(this.ordpcCLOLE, true);
           this.statusElement = !this.statusElement;
         }
       })
@@ -63,7 +70,7 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
 
   downloadFile(fileName: string, index: number): void {
     this.statusElement2[index] = true;
-    this.opService.downloadOrder(Constants.ID_ORDPC_CLARO_LOADED, fileName).
+    this.opService.downloadOrder(this.ordpcCL, fileName).
       subscribe({
         next: (resp) => {
           if (resp.status == Constants.WS_OK_CPO) {
@@ -75,7 +82,7 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
         },
         error: (err) => {
           console.log(err);
-          this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value, true);
+          this.showMessage(this.ordpcCDOE, true);
           this.statusElement2[index] = false;
         }
       })

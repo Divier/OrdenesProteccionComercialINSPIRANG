@@ -37,21 +37,14 @@ export class OperationsService extends GeneralService {
       );
   }
 
-  listOrders(directory: string): Observable<any | ListOrdersResponse> {
+  listOrders(directory: string | undefined): Observable<any | ListOrdersResponse> {
     return this.get(`${this.urlLO}?directory=${directory}`, []).
       pipe(
         map(this.getWsResponseCPO)
       );
   }
 
-  listOrders2(directory: string): Observable<any> {
-    return this.get('http://localhost:8080/uploadFileBase64', []).
-      pipe(
-        map(this.getWsResponseCPO)
-      );
-  }
-
-  downloadOrder(directory: string, fileName: string): Observable<any | DownloadOrderResponse> {
+  downloadOrder(directory: string | undefined, fileName: string): Observable<any | DownloadOrderResponse> {
     return this.get(`${this.urlDO}?directory=${directory}&fileName=${fileName}`, []).
       pipe(
         map(this.getWsResponseCPO)

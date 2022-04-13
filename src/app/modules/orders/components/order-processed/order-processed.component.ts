@@ -29,6 +29,12 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
   msgErrorOrderError: string = Constants.MSG_ERROR_ORDER_ERROR;
   msgErrorOrderProcessAndError: string = Constants.MSG_ERROR_ORDER_PROCESSED_AND_ERROR;
 
+  ordpcEP?: string;
+  ordpcEE?: string;
+  ordpcCDOE?: string;
+  ordpcCLOPE?: string;
+  ordpcCLOEE?: string;
+
   constructor(
     private opService: OperationsService,
     private primengConfig: PrimeNGConfig,
@@ -40,6 +46,11 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+    this.ordpcEP = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_ERICSSON_PROCESED).value;
+    this.ordpcEE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_ERICSSON_ERROR).value;
+    this.ordpcCDOE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value;
+    this.ordpcCLOPE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_PROCESS_ERROR).value;
+    this.ordpcCLOEE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_ERROR_ERROR).value;
     this.processMultipleRequest();
   }
 
@@ -49,7 +60,7 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
     }
   }
 
-  processMultipleRequest(): void {
+  private processMultipleRequest(): void {
     forkJoin({
       ordPro: this.loadTableOrdPro(),
       ordErr: this.loadTableOrdErr()
@@ -82,23 +93,23 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
       });
   }
 
-  loadTableOrdPro(): Observable<any | ListOrdersResponse> {
-    return this.opService.listOrders(Constants.ID_ORDPC_ERICSSON_PROCESED).
+  private loadTableOrdPro(): Observable<any | ListOrdersResponse> {
+    return this.opService.listOrders(this.ordpcEP).
       pipe(
-        catchError(error => of({ message: getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_PROCESS_ERROR).value }))
+        catchError(error => of({ message: this.ordpcCLOPE }))
       )
   }
 
-  loadTableOrdErr(): Observable<any | ListOrdersResponse> {
-    return this.opService.listOrders(Constants.ID_ORDPC_ERICSSON_ERROR).
+  private loadTableOrdErr(): Observable<any | ListOrdersResponse> {
+    return this.opService.listOrders(this.ordpcEE).
       pipe(
-        catchError(error => of({ message: getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_LIST_ORDER_ERROR_ERROR).value }))
+        catchError(error => of({ message: this.ordpcCLOEE }))
       )
   }
 
   downloadFile(flag: number, fileName: string, index: number): void {
     this.controlSpinner(flag, index);
-    let directory = (flag == 1) ? Constants.ID_ORDPC_ERICSSON_PROCESED : Constants.ID_ORDPC_ERICSSON_ERROR;
+    let directory = (flag == 1) ? this.ordpcEP : this.ordpcEE;
     this.opService.downloadOrder(directory, fileName).
       subscribe({
         next: (resp) => {
@@ -111,7 +122,7 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
         },
         error: (err) => {
           console.log(err);
-          this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value, true);
+          this.showMessage(this.ordpcCDOE, true);
           this.controlSpinner(flag, index);
         }
       })

@@ -1,6 +1,8 @@
 import { Constants } from './constants';
-export const getObjectFromArray = (array: any[], parameter: string, value: string) => {
-  return array.find(item => item[parameter] == value);
+
+export const getObjectFromArray = (parameters: any[], parameter: string, value: string) => {
+  const val = parameters.find(item => item[parameter] == value);
+  return val ? val : { value: `Error en parametro: ${value}` };
 }
 
 export function convertBase64ToBlobForDownload(base64: string): Blob {

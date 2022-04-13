@@ -7,7 +7,7 @@ export class BaseController {
 
   constructor(protected messageService: MessageService) { }
 
-  private setTimeViewMessage() {
+  private setTimeViewMessage(): void {
     this.subscription = interval(1000).
       subscribe(second => {
         if (second == 3) {
@@ -16,10 +16,12 @@ export class BaseController {
       });
   }
 
-  showMessage(message: string, autoHide: boolean) {
-    this.messageService.add({ severity: 'info', summary: '', detail: message });
-    if (autoHide) {
-      this.setTimeViewMessage();
+  showMessage(message: string | undefined, autoHide: boolean): void {
+    if (message) {
+      this.messageService.add({ severity: 'info', summary: '', detail: message });
+      if (autoHide) {
+        this.setTimeViewMessage();
+      }
     }
   }
 }

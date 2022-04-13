@@ -19,6 +19,8 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
   file: File | undefined;
   fileName!: string;
 
+  ordpcCSOE?: string;
+
   constructor(
     private opService: OperationsService,
     private primengConfig: PrimeNGConfig,
@@ -30,6 +32,7 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+    this.ordpcCSOE = getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_SENT_ORDER_ERROR).value;
   }
 
   ngOnDestroy(): void {
@@ -38,7 +41,7 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
     }
   }
 
-  uploadHandler(fileUpload: FileUpload) {
+  uploadHandler(fileUpload: FileUpload): void {
     this.fileUpload = fileUpload;
     if (this.fileUpload) {
       if (this.validateFileUpload()) {
@@ -64,25 +67,25 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
       Constants.MIME_TYPE_CSV.forEach(element => {
         base64 = base64.replace(`data:${element};base64,`, '');
       });
+      console.log(base64);
       this.opService.sentOrder({ 'file': base64 }).
         subscribe({
           next: (resp) => {
             this.showMessage(resp.message, true);
+            this.statusElement = !this.statusElement;
+            this.removeFile();
           },
           error: (err) => {
             console.log(err);
-            this.showMessage(getObjectFromArray(this.sessionService.getParamInfo(), 'code', Constants.ORDPC_CONSUME_SENT_ORDER_ERROR).value, true);
+            this.showMessage(this.ordpcCSOE, true);
             this.statusElement = !this.statusElement;
-          },
-          complete: () => {
             this.removeFile();
-            this.statusElement = !this.statusElement;
           }
         })
     }
   };
 
-  validateFileUpload(): boolean {
+  private validateFileUpload(): boolean {
     const fileSize: number = this.fileUpload!._files[0].size;
     const fileType: string = this.fileUpload!._files[0].type;
 
