@@ -4,7 +4,7 @@ import { MessageService, PrimeNGConfig } from 'primeng/api';
 import * as saveAs from 'file-saver';
 import { BaseController } from '../../../../core/utils/base-controller';
 import { SessionService } from '../../services/session.service';
-import { convertBase64ToBlobForDownload, getObjectFromArray } from 'src/app/core/utils/utils';
+import { convertBase64ToBlobForDownload } from 'src/app/core/utils/utils';
 import { Constants } from '../../../../core/utils/constants';
 import { catchError, forkJoin, Observable, of } from 'rxjs';
 import { ListOrdersResponse } from '../../interfaces/list-orders-response.interface';
@@ -29,12 +29,6 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
   msgErrorOrderError: string = Constants.MSG_ERROR_ORDER_ERROR;
   msgErrorOrderProcessAndError: string = Constants.MSG_ERROR_ORDER_PROCESSED_AND_ERROR;
 
-  ordpcDirEP?: string;
-  ordpcDirEE?: string;
-  ordpcCDOE?: string;
-  ordpcCLOPE?: string;
-  ordpcCLOEE?: string;
-
   constructor(
     private primengConfig: PrimeNGConfig,
     private opService: OperationsService,
@@ -46,11 +40,6 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.ordpcDirEP = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_OPC_DIRID_ERICSSON_PROCESSED).value;
-    this.ordpcDirEE = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_OPC_DIRID_ERICSSON_ERROR).value;
-    this.ordpcCDOE = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value;
-    this.ordpcCLOPE = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_CONSUME_LIST_ORDER_PROCESS_ERROR).value;
-    this.ordpcCLOEE = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_CONSUME_LIST_ORDER_ERROR_ERROR).value;
     this.processMultipleRequest();
   }
 
@@ -94,23 +83,23 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
   }
 
   private loadTableOrdPro(): Observable<any | ListOrdersResponse> {
-    return this.opService.listOrders(this.ordpcDirEP, this.timeOutList).
+    return this.opService.listOrders(this.sessionService.ordpcDirEP, this.sessionService.timeOutList).
       pipe(
-        catchError(error => of({ message: this.ordpcCLOPE }))
+        catchError(error => of({ message: this.sessionService.ordpcCLOPE }))
       )
   }
 
   private loadTableOrdErr(): Observable<any | ListOrdersResponse> {
-    return this.opService.listOrders(this.ordpcDirEE, this.timeOutList).
+    return this.opService.listOrders(this.sessionService.ordpcDirEE, this.sessionService.timeOutList).
       pipe(
-        catchError(error => of({ message: this.ordpcCLOEE }))
+        catchError(error => of({ message: this.sessionService.ordpcCLOEE }))
       )
   }
 
   downloadFile(flag: number, fileName: string, index: number): void {
     this.controlSpinner(flag, index);
-    const directory = (flag == 1) ? this.ordpcDirEP : this.ordpcDirEE;
-    this.opService.downloadOrder(directory, fileName, this.timeOutDownload).
+    const directory = (flag == 1) ? this.sessionService.ordpcDirEP : this.sessionService.ordpcDirEE;
+    this.opService.downloadOrder(directory, fileName, this.sessionService.timeOutDownload).
       subscribe({
         next: (resp) => {
           if (resp.status == Constants.WS_OK_CPO) {
@@ -122,7 +111,7 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
         },
         error: (err) => {
           console.log(err);
-          this.showMessage(this.ordpcCDOE, true);
+          this.showMessage(this.sessionService.ordpcCDOE, true);
           this.controlSpinner(flag, index);
         }
       })

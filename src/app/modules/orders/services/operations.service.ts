@@ -15,10 +15,6 @@ import { DownloadOrderResponse } from '../interfaces/download-order-response.int
 })
 export class OperationsService extends GeneralService {
 
-  urlSO = getObjectFromArray(this.sessionService.getEnvInfo().service, 'name', Constants.WS_ORDPC_COMERCIAL_PROTECTION_ORDER_SEND).url;
-  urlLO = getObjectFromArray(this.sessionService.getEnvInfo().service, 'name', Constants.WS_ORDPC_COMERCIAL_PROTECTION_ORDER_LIST).url;
-  urlDO = getObjectFromArray(this.sessionService.getEnvInfo().service, 'name', Constants.WS_ORDPC_COMERCIAL_PROTECTION_ORDER_DOWNLOAD).url;
-
   constructor(
     http: HttpClient,
     private sessionService: SessionService
@@ -30,7 +26,7 @@ export class OperationsService extends GeneralService {
     const headers = {
       transactionId: getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_HEADER_FIELD_TRANSACTION_ID).value
     }
-    return this.put(this.urlSO, [headers], request).
+    return this.put(this.sessionService.urlSO!, [headers], request).
       pipe(
         timeout(timeOutSend! * 1000),
         map(this.getWsResponseCPO)
@@ -38,7 +34,7 @@ export class OperationsService extends GeneralService {
   }
 
   listOrders(directory: string | undefined, timeOutList?: number): Observable<any | ListOrdersResponse> {
-    return this.get(`${this.urlLO}?directory=${directory}`, []).
+    return this.get(`${this.sessionService.urlLO}?directory=${directory}`, []).
       pipe(
         timeout(timeOutList! * 1000),
         map(this.getWsResponseCPO)
@@ -46,7 +42,7 @@ export class OperationsService extends GeneralService {
   }
 
   downloadOrder(directory: string | undefined, fileName: string, timeOutDownload?: number): Observable<any | DownloadOrderResponse> {
-    return this.get(`${this.urlDO}?directory=${directory}&fileName=${fileName}`, []).
+    return this.get(`${this.sessionService.urlDO}?directory=${directory}&fileName=${fileName}`, []).
       pipe(
         timeout(timeOutDownload! * 1000),
         map(this.getWsResponseCPO)

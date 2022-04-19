@@ -3,7 +3,7 @@ import { OperationsService } from '../../services/operations.service';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { saveAs } from 'file-saver';
 import { BaseController } from '../../../../core/utils/base-controller';
-import { convertBase64ToBlobForDownload, getObjectFromArray } from 'src/app/core/utils/utils';
+import { convertBase64ToBlobForDownload } from 'src/app/core/utils/utils';
 import { SessionService } from '../../services/session.service';
 import { Constants } from 'src/app/core/utils/constants';
 
@@ -21,10 +21,6 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
 
   msgErrorOrderLoad: string = Constants.MSG_ERROR_ORDER_LOAD;
 
-  ordpcDirCL?: string;
-  ordpcCLOLE?: string;
-  ordpcCDOE?: string;
-
   constructor(
     private primengConfig: PrimeNGConfig,
     private opService: OperationsService,
@@ -36,9 +32,6 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.ordpcDirCL = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_OPC_DIRID_CLARO_AUDIT).value;
-    this.ordpcCLOLE = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_CONSUME_LIST_ORDER_LOAD_ERROR).value;
-    this.ordpcCDOE = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_CONSUME_DOWNLOAD_ORDER_ERROR).value;
     this.loadTableOrdLoa();
   }
 
@@ -49,7 +42,7 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
   }
 
   private loadTableOrdLoa(): void {
-    this.opService.listOrders(this.ordpcDirCL, this.timeOutList).
+    this.opService.listOrders(this.sessionService.ordpcDirCL, this.sessionService.timeOutList).
       subscribe({
         next: (resp) => {
           if (resp.status == Constants.WS_OK_CPO) {
@@ -62,7 +55,7 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
         },
         error: (err) => {
           console.log(err);
-          this.showMessage(this.ordpcCLOLE, true);
+          this.showMessage(this.sessionService.ordpcCLOLE, true);
           this.statusElement = !this.statusElement;
         }
       })
@@ -70,7 +63,7 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
 
   downloadFile(fileName: string, index: number): void {
     this.statusElement2[index] = true;
-    this.opService.downloadOrder(this.ordpcDirCL, fileName, this.timeOutDownload).
+    this.opService.downloadOrder(this.sessionService.ordpcDirCL, fileName, this.sessionService.timeOutDownload).
       subscribe({
         next: (resp) => {
           if (resp.status == Constants.WS_OK_CPO) {
@@ -82,7 +75,7 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
         },
         error: (err) => {
           console.log(err);
-          this.showMessage(this.ordpcCDOE, true);
+          this.showMessage(this.sessionService.ordpcCDOE, true);
           this.statusElement2[index] = false;
         }
       })

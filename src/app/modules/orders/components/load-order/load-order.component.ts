@@ -5,7 +5,6 @@ import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { Constants } from '../../../../core/utils/constants';
 import { BaseController } from '../../../../core/utils/base-controller';
 import { SessionService } from '../../services/session.service';
-import { getObjectFromArray } from 'src/app/core/utils/utils';
 
 @Component({
   selector: 'app-load-order',
@@ -19,8 +18,6 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
   file: File | undefined;
   fileName!: string;
 
-  ordpcCSOE?: string;
-
   constructor(
     private primengConfig: PrimeNGConfig,
     private opService: OperationsService,
@@ -32,7 +29,6 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.ordpcCSOE = getObjectFromArray(this.sessionService.getEnvInfo().constant, 'code', Constants.ORDPC_CONSUME_SENT_ORDER_ERROR).value;
   }
 
   ngOnDestroy(): void {
@@ -68,7 +64,7 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
         base64 = base64.replace(`data:${element};base64,`, '');
       });
       console.log(base64);
-      this.opService.sentOrder({ 'file': base64 }, this.timeOutSend).
+      this.opService.sentOrder({ 'file': base64 }, this.sessionService.timeOutSend).
         subscribe({
           next: (resp) => {
             this.showMessage(resp.message, true);
@@ -77,7 +73,7 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
           },
           error: (err) => {
             console.log(err);
-            this.showMessage(this.ordpcCSOE, true);
+            this.showMessage(this.sessionService.ordpcCSOE, true);
             this.statusElement = !this.statusElement;
             this.removeFile();
           }

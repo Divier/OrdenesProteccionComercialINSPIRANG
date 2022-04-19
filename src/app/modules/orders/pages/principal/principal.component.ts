@@ -49,6 +49,7 @@ export class PrincipalComponent extends BaseController implements OnInit {
               && service.length == Constants.REQUIRED_SERVICES.length) {
               this.sessionService.setEnvInfo(new EnvironmentInfo({ constant, service }));
               this.viewPrincipal = true;
+              this.sessionService.loadEnvConfiguration();
             } else {
               this.showMessage(Constants.MSG_ERROR_INCOMPLETE_PARAMETERS_AND_SERVICES, false);
             }
@@ -78,50 +79,6 @@ export class PrincipalComponent extends BaseController implements OnInit {
         catchError(error => of({ message: Constants.MSG_ERROR_READ_SERVICES }))
       )
   }
-
-  /*private getParamInfo() {
-    this.paramService.getParameters().
-      subscribe({
-        next: (resp) => {
-          if (resp.status) {
-            const { getConstantsResponse: constant } = resp.data;
-            if (constant.length > 0) {
-              this.sessionService.setParamInfo(constant);
-              this.viewPrincipal = true;
-            } else {
-              this.showMessage(Constants.MSG_ERROR_ZERO_PARAMETERS, false);
-            }
-          }
-          this.statusElement = !this.statusElement;
-        },
-        error: () => {
-          this.showMessage(Constants.MSG_ERROR_READ_PARAMETERS, false);
-          this.statusElement = !this.statusElement;
-        }
-      })
-  }
-
-  private getWSInfo() {
-    this.paramService.getServices().
-      subscribe({
-        next: (resp) => {
-          if (resp.status) {
-            const { getWebServicesResponse: constant } = resp.data;
-            if (constant.length > 0) {
-              this.sessionService.setWSInfo(constant);
-              this.viewPrincipal = true;
-            } else {
-              this.showMessage(Constants.MSG_ERROR_ZERO_PARAMETERS, false);
-            }
-          }
-          this.statusElement = !this.statusElement;
-        },
-        error: () => {
-          this.showMessage(Constants.MSG_ERROR_READ_PARAMETERS, false);
-          this.statusElement = !this.statusElement;
-        }
-      })
-  }*/
 
   handleChange(e: any) {
     switch (e.index) {
