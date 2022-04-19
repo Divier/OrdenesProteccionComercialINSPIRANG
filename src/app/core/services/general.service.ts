@@ -6,7 +6,7 @@ import { Constants } from '../utils/constants';
 import { SentOrderResponse } from '../../modules/orders/interfaces/sent-order-response.interface';
 import { ListOrdersResponse } from '../../modules/orders/interfaces/list-orders-response.interface';
 import { DownloadOrderResponse } from '../../modules/orders/interfaces/download-order-response.interface';
-import { GetWebServicesResponse } from '../interfaces/services.ext.interface';
+import { GetWebServicesResponse } from '../interfaces/services-ext.interface';
 
 @Injectable({
   providedIn: 'root'

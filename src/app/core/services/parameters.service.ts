@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, timeout } from 'rxjs';
 import { GetConstantsResponse } from 'src/app/core/interfaces/parameter.interface';
-import { GetWebServicesResponse } from 'src/app/core/interfaces/services.ext.interface';
+import { GetWebServicesResponse } from 'src/app/core/interfaces/services-ext.interface';
 import { Constants } from 'src/app/core/utils/constants';
 import { environment } from 'src/environments/environment';
 import { GeneralService } from './general.service';

@@ -6,7 +6,7 @@ import { MessageService } from 'primeng/api';
 import { Constants } from '../../../../core/utils/constants';
 import { catchError, forkJoin, Observable, of } from 'rxjs';
 import { GetConstantsResponse } from 'src/app/core/interfaces/parameter.interface';
-import { GetWebServicesResponse } from 'src/app/core/interfaces/services.ext.interface';
+import { GetWebServicesResponse } from 'src/app/core/interfaces/services-ext.interface';
 import { EnvironmentInfo } from 'src/app/core/models/environment-info';
 
 @Component({
