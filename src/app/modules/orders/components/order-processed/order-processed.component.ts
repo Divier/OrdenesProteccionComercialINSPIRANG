@@ -3,7 +3,7 @@ import { OperationsService } from '../../services/operations.service';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import * as saveAs from 'file-saver';
 import { BaseController } from '../../../../core/utils/base-controller';
-import { SessionService } from '../../services/session.service';
+import { SessionService } from '../../../../core/services/session.service';
 import { convertBase64ToBlobForDownload } from 'src/app/core/utils/utils';
 import { Constants } from '../../../../core/utils/constants';
 import { catchError, forkJoin, Observable, of } from 'rxjs';

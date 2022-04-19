@@ -4,7 +4,7 @@ import { OperationsService } from '../../services/operations.service';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { Constants } from '../../../../core/utils/constants';
 import { BaseController } from '../../../../core/utils/base-controller';
-import { SessionService } from '../../services/session.service';
+import { SessionService } from '../../../../core/services/session.service';
 
 @Component({
   selector: 'app-load-order',

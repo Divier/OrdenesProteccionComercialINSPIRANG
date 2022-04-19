@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { GetConstantsResponse } from 'src/app/core/interfaces/parameter.interface';
-import { Constants } from '../../../core/utils/constants';
-import { SentOrderResponse } from '../interfaces/sent-order-response.interface';
-import { ListOrdersResponse } from '../interfaces/list-orders-response.interface';
-import { DownloadOrderResponse } from '../interfaces/download-order-response.interface';
-import { GetWebServicesResponse } from '../../../core/interfaces/services.ext.interface';
+import { Constants } from '../utils/constants';
+import { SentOrderResponse } from '../../modules/orders/interfaces/sent-order-response.interface';
+import { ListOrdersResponse } from '../../modules/orders/interfaces/list-orders-response.interface';
+import { DownloadOrderResponse } from '../../modules/orders/interfaces/download-order-response.interface';
+import { GetWebServicesResponse } from '../interfaces/services.ext.interface';
 
 @Injectable({
   providedIn: 'root'

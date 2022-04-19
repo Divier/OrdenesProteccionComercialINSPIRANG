@@ -1,6 +1,6 @@
 import { MessageService } from "primeng/api";
 import { interval, Subscription } from "rxjs";
-import { SessionService } from '../../modules/orders/services/session.service';
+import { SessionService } from '../services/session.service';
 
 export class BaseController {
 

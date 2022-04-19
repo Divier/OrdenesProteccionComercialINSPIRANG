@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ParametersService } from '../../services/parameters.service';
-import { SessionService } from '../../services/session.service';
+import { ParametersService } from '../../../../core/services/parameters.service';
+import { SessionService } from '../../../../core/services/session.service';
 import { BaseController } from '../../../../core/utils/base-controller';
 import { MessageService } from 'primeng/api';
 import { Constants } from '../../../../core/utils/constants';

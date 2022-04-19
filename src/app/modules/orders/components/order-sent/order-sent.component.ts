@@ -4,7 +4,7 @@ import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { saveAs } from 'file-saver';
 import { BaseController } from '../../../../core/utils/base-controller';
 import { convertBase64ToBlobForDownload } from 'src/app/core/utils/utils';
-import { SessionService } from '../../services/session.service';
+import { SessionService } from '../../../../core/services/session.service';
 import { Constants } from 'src/app/core/utils/constants';
 
 @Component({
