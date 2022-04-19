@@ -63,7 +63,6 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
       Constants.MIME_TYPE_CSV.forEach(element => {
         base64 = base64.replace(`data:${element};base64,`, '');
       });
-      console.log(base64);
       this.opService.sentOrder({ 'file': base64 }, this.sessionService.timeOutSend).
         subscribe({
           next: (resp) => {
