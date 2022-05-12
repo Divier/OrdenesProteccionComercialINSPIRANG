@@ -1,6 +1,7 @@
 import { MessageService } from "primeng/api";
 import { interval, Subscription } from "rxjs";
 import { SessionService } from '../services/session.service';
+import { Constants } from './constants';
 
 export class BaseController {
 
@@ -14,7 +15,7 @@ export class BaseController {
   private setTimeViewMessage(): void {
     this.subscription = interval(1000).
       subscribe(second => {
-        if (second == 3) {
+        if (second == Constants.SECONDS_TO_SEE_MESSAGES) {
           this.messageService.clear();
         }
       });

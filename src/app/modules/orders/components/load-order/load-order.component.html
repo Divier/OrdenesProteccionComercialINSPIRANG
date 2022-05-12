@@ -9,15 +9,15 @@
       </div>
     </div>
 
-    <div class="flex justify-content-center mt-3">
+    <div class="flex sm:justify-content-center mt-3">
       <div class="flex align-items-center justify-content-center">
         <div class="flex flex-column">
           <small>{{fileName}}</small>
         </div>
       </div>
-      <div class="flex align-items-center justify-content-center ml-4">
+      <div class="flex align-items-center justify-content-center">
         <button *ngIf="fileUpload" pButton pRipple type="button" label="Eliminar" icon="pi pi-times"
-          (click)="removeFile()" [disabled]="statusElement" class="p-button-link">
+          (click)="removeFile()" [disabled]="statusPreLoad || statusElement" class="p-button-link">
         </button>
       </div>
     </div>
@@ -33,15 +33,10 @@
 
     <div class="flex justify-content-center mb-3">
       <div class="flex align-items-center justify-content-center">
-        <button *ngIf="fileUpload" pButton pRipple label="Enviar" (click)="sendFile()" [disabled]="statusElement"
+        <button *ngIf="fileUpload" pButton pRipple [label]="statusElement ? 'Enviando' : 'Enviar'"
+          (click)="sendFile()" [disabled]="statusPreLoad || statusElement" [loading]="statusElement"
           class="p-button-raised p-button-rounded">
         </button>
-      </div>
-    </div>
-
-    <div class="flex justify-content-center mb-3" *ngIf="statusElement">
-      <div class="flex align-items-center justify-content-center">
-        <p-progressSpinner></p-progressSpinner>
       </div>
     </div>
   </p-card>

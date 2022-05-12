@@ -505,3 +505,9 @@ label {
 .p-divider.p-divider-horizontal {
   margin: 0.5rem 0 !important;
 }
+
+@media screen and (max-width: 296px) {
+  .sizeInputText {
+    overflow: hidden;
+  }
+}

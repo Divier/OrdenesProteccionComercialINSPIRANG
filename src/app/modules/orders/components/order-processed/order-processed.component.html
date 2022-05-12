@@ -1,19 +1,26 @@
 <p-messages hideTransitionOptions="500ms"></p-messages>
-<p-progressSpinner *ngIf="statusElement"></p-progressSpinner>
 <div class="animate__animated animate__zoomInDown">
-  <p-card class="card flex justify-content-center mt-1" *ngIf="lstOrdProc.length > 0">
+  <p-card class="card flex justify-content-center mt-1">
     <ng-template pTemplate="header">
       <strong class="mx-3">Ordenes Procesadas</strong>
     </ng-template>
+
     <p-divider></p-divider>
-    <p-table [value]="lstOrdProc" selectionMode="single" [(selection)]="selOrdProc" dataKey="fileName"
-      [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,50,100]" responsiveLayout="scroll">
+
+    <p-table #dt1 [value]="lstOrdProc" selectionMode="single" [(selection)]="selOrdProc" [paginator]="true" [rows]="10"
+      [rowsPerPageOptions]="[10,50,100]" responsiveLayout="scroll" [loading]="statusLoadTable1">
+      <ng-template pTemplate="caption">
+        <app-search-filter [lstOrdOriginal]="_lstOrdProcOriginal" [dt]="dt1"
+          (filteredListEvent)="setFilteredListTable1($event)"></app-search-filter>
+      </ng-template>
+
       <ng-template pTemplate="header">
         <tr>
           <th>Archivo</th>
           <th>Resultado Validacion</th>
         </tr>
       </ng-template>
+
       <ng-template pTemplate="body" let-orderProc let-i="rowIndex">
         <tr>
           <td>{{orderProc}}</td>
@@ -24,25 +31,38 @@
           </td>
         </tr>
       </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="2">{{msgErrorOrderProcess}}</td>
+        </tr>
+      </ng-template>
     </p-table>
   </p-card>
 </div>
 
 <div class="animate__animated animate__zoomInDown">
-  <p-card class="card flex justify-content-center" [ngClass]="lstOrdProc.length > 0 ? 'mt-7' : ''"
-    *ngIf="lstOrdErr.length > 0">
+  <p-card class="card flex justify-content-center" [ngClass]="lstOrdProc.length > 0 ? 'mt-7' : 'mt-2'">
     <ng-template pTemplate="header">
       <strong class="mx-3">Ordenes Con Error</strong>
     </ng-template>
+
     <p-divider></p-divider>
-    <p-table [value]="lstOrdErr" selectionMode="single" [(selection)]="selOrdErr" dataKey="fileName" [paginator]="true"
-      [rows]="10" [rowsPerPageOptions]="[10,50,100]" responsiveLayout="scroll">
+
+    <p-table #dt2 [value]="lstOrdErr" selectionMode="single" [(selection)]="selOrdErr" [paginator]="true" [rows]="10"
+      [rowsPerPageOptions]="[10,50,100]" responsiveLayout="scroll" [loading]="statusLoadTable2">
+      <ng-template pTemplate="caption">
+        <app-search-filter [lstOrdOriginal]="_lstOrdErrOriginal" [dt]="dt2"
+          (filteredListEvent)="setFilteredListTable2($event)"></app-search-filter>
+      </ng-template>
+
       <ng-template pTemplate="header">
         <tr>
           <th>Archivo</th>
           <th>Resultado Validacion</th>
         </tr>
       </ng-template>
+
       <ng-template pTemplate="body" let-orderErr let-i="rowIndex">
         <tr>
           <td>{{orderErr}}</td>
@@ -53,16 +73,12 @@
           </td>
         </tr>
       </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="2">{{msgErrorOrderError}}</td>
+        </tr>
+      </ng-template>
     </p-table>
   </p-card>
 </div>
-<div *ngIf="lstOrdProc.length == 0 && lstOrdErr.length == 0 && !statusElement; else first">
-  <small class="mx-3"><strong>*</strong> {{msgErrorOrderProcessAndError}}</small>
-</div>
-<ng-template #first>
-  <small class="mx-3" *ngIf="lstOrdProc.length == 0 && !statusElement; else second"><strong>*</strong>
-    {{msgErrorOrderProcess}}</small>
-</ng-template>
-<ng-template #second>
-  <small class="mx-3" *ngIf="lstOrdErr.length == 0 && !statusElement"><strong>*</strong> {{msgErrorOrderError}}</small>
-</ng-template>

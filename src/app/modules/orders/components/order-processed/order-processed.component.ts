@@ -15,19 +15,37 @@ import { ListOrdersResponse } from '../../interfaces/list-orders-response.interf
 })
 export class OrderProcessedComponent extends BaseController implements OnInit, OnDestroy {
 
-  statusElement: boolean = true;
+  statusLoadTable1: boolean = true;
+  statusLoadTable2: boolean = true;
   statusElement2: boolean[] = [];
   statusElement3: boolean[] = [];
 
-  lstOrdProc: string[] = [];
+  _lstOrdProcOriginal: string[] = [];
+  _lstOrdProcAux: string[] = [];
   selOrdProc: string | undefined;
 
-  lstOrdErr: string[] = [];
+  _lstOrdErrOriginal: string[] = [];
+  _lstOrdErrAux: string[] = [];
   selOrdErr: string | undefined;
 
   msgErrorOrderProcess: string = Constants.MSG_ERROR_ORDER_PROCESSED;
   msgErrorOrderError: string = Constants.MSG_ERROR_ORDER_ERROR;
-  msgErrorOrderProcessAndError: string = Constants.MSG_ERROR_ORDER_PROCESSED_AND_ERROR;
+
+  get lstOrdProc() {
+    return [...this._lstOrdProcAux];
+  }
+
+  set lstOrdProc(lista: string[]) {
+    this._lstOrdProcAux = lista;
+  }
+
+  get lstOrdErr() {
+    return [...this._lstOrdErrAux];
+  }
+
+  set lstOrdErr(lista: string[]) {
+    this._lstOrdErrAux = lista;
+  }
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -49,53 +67,6 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
     }
   }
 
-  private processMultipleRequest(): void {
-    forkJoin({
-      ordPro: this.loadTableOrdPro(),
-      ordErr: this.loadTableOrdErr()
-    }).
-      subscribe({
-        next: ({ ordPro, ordErr }) => {
-          // Se verifica que ambos servicios hayan responido status = 'OK'
-          const status = ordPro.status == Constants.WS_OK_CPO && ordErr.status == Constants.WS_OK_CPO;
-          if (status) {
-            this.lstOrdProc = ordPro.data.files;
-            this.lstOrdErr = ordErr.data.files;
-            this.statusElement2 = new Array(this.lstOrdProc.length);
-            this.statusElement3 = new Array(this.lstOrdErr.length);
-          } else {
-            if (ordPro.status == Constants.WS_OK_CPO) {
-              this.lstOrdProc = ordPro.data.files;
-              this.statusElement2 = new Array(this.lstOrdProc.length);
-            } else {
-              this.showMessage(ordPro.message, true);
-            }
-            if (ordErr.status == Constants.WS_OK_CPO) {
-              this.lstOrdErr = ordErr.data.files;
-              this.statusElement3 = new Array(this.lstOrdErr.length);
-            } else {
-              this.showMessage(ordErr.message, true);
-            }
-          }
-          this.statusElement = !this.statusElement;
-        }
-      });
-  }
-
-  private loadTableOrdPro(): Observable<any | ListOrdersResponse> {
-    return this.opService.listOrders(this.sessionService.ordpcDirEP, this.sessionService.timeOutList).
-      pipe(
-        catchError(error => of({ message: this.sessionService.ordpcCLOPE }))
-      )
-  }
-
-  private loadTableOrdErr(): Observable<any | ListOrdersResponse> {
-    return this.opService.listOrders(this.sessionService.ordpcDirEE, this.sessionService.timeOutList).
-      pipe(
-        catchError(error => of({ message: this.sessionService.ordpcCLOEE }))
-      )
-  }
-
   downloadFile(flag: number, fileName: string, index: number): void {
     this.controlSpinner(flag, index);
     const directory = (flag == 1) ? this.sessionService.ordpcDirEP : this.sessionService.ordpcDirEE;
@@ -115,6 +86,66 @@ export class OrderProcessedComponent extends BaseController implements OnInit, O
           this.controlSpinner(flag, index);
         }
       })
+  }
+
+  setFilteredListTable1(filteredList: string[]) {
+    this.lstOrdProc = filteredList;
+  }
+
+  setFilteredListTable2(filteredList: string[]) {
+    this.lstOrdErr = filteredList;
+  }
+
+  private processMultipleRequest(): void {
+    forkJoin({
+      ordPro: this.loadTableOrdPro(),
+      ordErr: this.loadTableOrdErr()
+    }).
+      subscribe({
+        next: ({ ordPro, ordErr }) => {
+          // Se verifica que ambos servicios hayan responido status = 'OK'
+          const status = ordPro.status == Constants.WS_OK_CPO && ordErr.status == Constants.WS_OK_CPO;
+          if (status) {
+            this._lstOrdProcAux = ordPro.data.files;
+            this._lstOrdProcOriginal = ordPro.data.files;
+            this._lstOrdErrAux = ordErr.data.files;
+            this._lstOrdErrOriginal = ordErr.data.files;
+            this.statusElement2 = new Array(this._lstOrdProcAux.length);
+            this.statusElement3 = new Array(this._lstOrdErrAux.length);
+          } else {
+            if (ordPro.status == Constants.WS_OK_CPO) {
+              this._lstOrdProcAux = ordPro.data.files;
+              this._lstOrdProcOriginal = ordPro.data.files;
+              this.statusElement2 = new Array(this._lstOrdProcAux.length);
+            } else {
+              this.showMessage(ordPro.message, true);
+            }
+            if (ordErr.status == Constants.WS_OK_CPO) {
+              this._lstOrdErrAux = ordErr.data.files;
+              this._lstOrdErrOriginal = ordErr.data.files;
+              this.statusElement3 = new Array(this._lstOrdErrAux.length);
+            } else {
+              this.showMessage(ordErr.message, true);
+            }
+          }
+          this.statusLoadTable1 = !this.statusLoadTable1;
+          this.statusLoadTable2 = !this.statusLoadTable2;
+        }
+      });
+  }
+
+  private loadTableOrdPro(): Observable<any | ListOrdersResponse> {
+    return this.opService.listOrders(this.sessionService.ordpcDirEP, this.sessionService.timeOutList).
+      pipe(
+        catchError(error => of({ message: this.sessionService.ordpcCLOPE }))
+      )
+  }
+
+  private loadTableOrdErr(): Observable<any | ListOrdersResponse> {
+    return this.opService.listOrders(this.sessionService.ordpcDirEE, this.sessionService.timeOutList).
+      pipe(
+        catchError(error => of({ message: this.sessionService.ordpcCLOEE }))
+      )
   }
 
   private controlSpinner(flag: number, index: number): void {

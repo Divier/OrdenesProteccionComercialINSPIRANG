@@ -13,6 +13,7 @@ import { SessionService } from '../../../../core/services/session.service';
 export class LoadOrderComponent extends BaseController implements OnInit, OnDestroy {
 
   statusElement: boolean = false;
+  statusPreLoad: boolean = true;
 
   fileUpload!: FileUpload | undefined;
   file: File | undefined;
@@ -38,10 +39,20 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
   }
 
   uploadHandler(fileUpload: FileUpload): void {
+    this.statusPreLoad = true;
     this.fileUpload = fileUpload;
     if (this.fileUpload) {
       if (this.validateFileUpload()) {
         this.fileName = this.fileUpload._files[0].name;
+        setTimeout(() => {
+          this.statusPreLoad = false;
+        }, 500);
+        /*const reader = new FileReader();
+        reader.readAsText(this.fileUpload!._files[0]);
+        reader.onloadend = () => {
+          procesar(reader, fileUpload);
+          this.fileUpload = fileUpload;
+        };*/
       } else {
         this.removeFile();
       }
@@ -78,6 +89,43 @@ export class LoadOrderComponent extends BaseController implements OnInit, OnDest
           }
         })
     }
+  };
+
+  sendFile2(): void {
+    this.statusElement = !this.statusElement;
+
+    /*const reader2 = new FileReader();
+    reader2.readAsText(this.fileUpload!._files[2]);
+    reader2.onloadend = () => {
+      console.log(reader2.result as string);
+    };*/
+
+
+    /*this.fileUpload!._files.forEach(element => {
+
+      const reader = new FileReader();
+      reader.readAsDataURL(element as Blob);
+      reader.onloadend = () => {
+        let base64: string = reader.result as string;
+        Constants.MIME_TYPE_CSV.forEach(element => {
+          base64 = base64.replace(`data:${element};base64,`, '');
+        });
+        this.opService.sentOrder({ 'file': base64 }, this.sessionService.timeOutSend).
+          subscribe({
+            next: (resp) => {
+              this.showMessage(resp.message, true);
+              this.statusElement = !this.statusElement;
+              this.removeFile();
+            },
+            error: (err) => {
+              console.log(err);
+              this.showMessage(this.sessionService.ordpcCSOE, true);
+              this.statusElement = !this.statusElement;
+              this.removeFile();
+            }
+          })
+      }
+    });*/
   };
 
   private validateFileUpload(): boolean {

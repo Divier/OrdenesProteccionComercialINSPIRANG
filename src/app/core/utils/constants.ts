@@ -8,6 +8,8 @@ export class Constants {
 
   public static SIZE_FILE_CSV: number = 10485760;
 
+  public static SECONDS_TO_SEE_MESSAGES: number = 10;
+
   // Internal identifiers
   public static ID_STORAGE_PARAM_INFO: string = 'parametersInfo';
 
@@ -27,7 +29,6 @@ export class Constants {
   public static MSG_ERROR_ORDER_LOAD: string = "Sin registros para mostrar con relacion a ordenes cargadas";
   public static MSG_ERROR_ORDER_PROCESSED: string = "Sin registros para mostrar con relacion a ordenes procesadas";
   public static MSG_ERROR_ORDER_ERROR: string = "Sin registros para mostrar con relacion a ordenes con error";
-  public static MSG_ERROR_ORDER_PROCESSED_AND_ERROR: string = "Sin registros para mostrar con relacion a ordenes procesadas y ordenes con error";
 
   // Parameters
   public static ORDPC_HEADER_FIELD_TRANSACTION_ID: string = 'ORDPC_HEADER_FIELD_TRANSACTION_ID';

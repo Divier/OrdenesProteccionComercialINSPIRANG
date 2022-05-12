@@ -6,6 +6,7 @@ import { LoadOrderComponent } from './components/load-order/load-order.component
 import { OrderSentComponent } from './components/order-sent/order-sent.component';
 import { OrderRoutingModule } from './order-routing.module';
 import { OrderProcessedComponent } from './components/order-processed/order-processed.component';
+import { SearchFilterComponent } from 'src/app/components/search-filter/search-filter.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { OrderProcessedComponent } from './components/order-processed/order-proc
     LoadOrderComponent,
     OrderSentComponent,
     OrderProcessedComponent,
+    SearchFilterComponent
   ],
   imports: [
     CommonModule,

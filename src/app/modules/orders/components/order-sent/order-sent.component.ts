@@ -13,13 +13,22 @@ import { Constants } from 'src/app/core/utils/constants';
 })
 export class OrderSentComponent extends BaseController implements OnInit, OnDestroy {
 
-  statusElement: boolean = true;
+  statusLoadTable: boolean = true;
   statusElement2: boolean[] = [];
 
-  lstOrdSent: string[] = [];
+  _lstOrdSentOriginal: string[] = [];
+  _lstOrdSentAux: string[] = [];
   selOrdSent: string | undefined;
 
   msgErrorOrderLoad: string = Constants.MSG_ERROR_ORDER_LOAD;
+
+  get lstOrdSent() {
+    return [...this._lstOrdSentAux];
+  }
+
+  set lstOrdSent(lista: string[]) {
+    this._lstOrdSentAux = lista;
+  }
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -41,26 +50,6 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
     }
   }
 
-  private loadTableOrdLoa(): void {
-    this.opService.listOrders(this.sessionService.ordpcDirCL, this.sessionService.timeOutList).
-      subscribe({
-        next: (resp) => {
-          if (resp.status == Constants.WS_OK_CPO) {
-            this.lstOrdSent = resp.data.files;
-            this.statusElement2 = new Array(this.lstOrdSent.length);
-          } else {
-            this.showMessage(resp.message, true);
-          }
-          this.statusElement = !this.statusElement;
-        },
-        error: (err) => {
-          console.log(err);
-          this.showMessage(this.sessionService.ordpcCLOLE, true);
-          this.statusElement = !this.statusElement;
-        }
-      })
-  }
-
   downloadFile(fileName: string, index: number): void {
     this.statusElement2[index] = true;
     this.opService.downloadOrder(this.sessionService.ordpcDirCL, fileName, this.sessionService.timeOutDownload).
@@ -77,6 +66,31 @@ export class OrderSentComponent extends BaseController implements OnInit, OnDest
           console.log(err);
           this.showMessage(this.sessionService.ordpcCDOE, true);
           this.statusElement2[index] = false;
+        }
+      })
+  }
+
+  setFilteredList(filteredList: string[]) {
+    this.lstOrdSent = filteredList;
+  }
+
+  private loadTableOrdLoa(): void {
+    this.opService.listOrders(this.sessionService.ordpcDirCL, this.sessionService.timeOutList).
+      subscribe({
+        next: (resp) => {
+          if (resp.status == Constants.WS_OK_CPO) {
+            this._lstOrdSentAux = resp.data.files;
+            this._lstOrdSentOriginal = resp.data.files;
+            this.statusElement2 = new Array(this.lstOrdSent.length);
+          } else {
+            this.showMessage(resp.message, true);
+          }
+          this.statusLoadTable = !this.statusLoadTable;
+        },
+        error: (err) => {
+          console.log(err);
+          this.showMessage(this.sessionService.ordpcCLOLE, true);
+          this.statusLoadTable = !this.statusLoadTable;
         }
       })
   }

@@ -1,0 +1,8 @@
+<div class="flex sizeInputText mt-2">
+  <span class="p-float-label p-input-icon-left">
+    <i class="pi pi-search"></i>
+    <input #filterCustom id="float-input" type="text" pInputText (input)="applyFilterCustom(filterCustom.value)"
+      placeholder="Filtrar...">
+    <label for="float-input">Filtrar nombre de archivo</label>
+  </span>
+</div>

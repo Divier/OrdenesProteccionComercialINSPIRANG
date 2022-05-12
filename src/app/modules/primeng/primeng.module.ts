@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { TabViewModule } from 'primeng/tabview';
 import { FileUploadModule } from 'primeng/fileupload';
+import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
@@ -16,6 +17,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   exports: [
     TabViewModule,
     FileUploadModule,
+    InputTextModule,
     ButtonModule,
     MessagesModule,
     MessageModule,
